@@ -4,9 +4,7 @@
 package
 {
 import flash.utils.Dictionary;
-
 import net.flashpunk.FP;
-
 import net.flashpunk.World;
 
 public class WorldManager
@@ -17,17 +15,17 @@ public class WorldManager
     {
     }
 
-    public static function add(name:String, world:World)
+    public static function add(name:String, world:World):void
     {
         worlds[name] = world;
     }
 
-    public static function get(name:String)
+    public static function get(name:String):World
     {
         return worlds[name];
     }
 
-    public static function switchTo(name:String)
+    public static function switchTo(name:String):void
     {
         FP.world = worlds[name];
     }
