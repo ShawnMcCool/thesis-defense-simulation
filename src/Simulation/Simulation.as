@@ -1,37 +1,48 @@
-package   
+package Simulation  
 {
 	public class Simulation 
 	{
 		private var daysPerSecond:int = 4;
-		private var numberOfMeeples:int = 20;
+		private var numberOfIndividuals:int = 100;
 		
-		private var meeples:Vector.<Meeple> = new Vector.<Meeple>();
+		
+		private var frameCount:int = 0;
+		
+		private var individuals:Vector.<Individual> = new Vector.<Individual>();
 		
 		public function Simulation() 
 		{
-			for (var i:int = 0; i < numberOfMeeples; i++) 
+			for (var i:int = 0; i < numberOfIndividuals; i++) 
 			{
-				meeples.push(new Meeple);
+				individuals.push(new Individual);
 			}
+		}
+			
+		public function GetIndividuals():Vector.<Individual>
+		{
+			return individuals;
 		}
 		
 		public function Update():void
 		{
-			nextDay();
-		}
-		
-		private function nextDay():void
-		{
-			updateMeeples();
-		}
-		
-		private function updateMeeples():void
-		{
-			for each(var meeple:Meeple in meeples)
+			trace(frameCount);
+			frameCount++;
+			if (frameCount == 60/daysPerSecond) 
 			{
-				meeple.DailyUpdate();
+				frameCount = 0;
+				nextDay();
+				trace("Next day happened.");
 			}
 		}
+		
+		public function nextDay():void
+		{
+			for each(var individual:Individual in individuals)
+			{
+				individual.DailyUpdate();
+			}
+		}
+		
 	}
 
 }
