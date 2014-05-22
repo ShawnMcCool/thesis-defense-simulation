@@ -7,6 +7,7 @@ import net.flashpunk.graphics.Text;
 public class TextEntity extends Entity
 {
     private var text:Text;
+    private var prefix:String = "";
 
     public function TextEntity(text:String, size:Number = 32, x:Number = 0, y:Number = 0)
     {
@@ -18,6 +19,11 @@ public class TextEntity extends Entity
         SetText(text);
     }
 
+    public function SetPrefix(prefix:String)
+    {
+        this.prefix = prefix;
+    }
+
     private function SetSize(size:Number = 32):void
     {
         Text.size = size;
@@ -25,7 +31,7 @@ public class TextEntity extends Entity
 
     public function SetText(text:String):void
     {
-        this.text = new Text(text);
+        this.text = new Text(prefix + text);
         graphic = this.text;
     }
 

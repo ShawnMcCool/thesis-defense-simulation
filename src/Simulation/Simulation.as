@@ -3,7 +3,7 @@ package Simulation
 public class Simulation
 {
     private var daysPerSecond:int = 4;
-    private var numberOfIndividuals:int = 100;
+    private var numberOfIndividuals:int = 104;
 
     private var frameCount:int = 0;
     private var dayCount:int = 0;

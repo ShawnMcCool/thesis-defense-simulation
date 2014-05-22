@@ -44,7 +44,7 @@ public class TitleScreen extends World
 
     override public function update():void
     {
-        if (Input.check(Key.RIGHT)) {
+        if (Input.pressed(Key.RIGHT)) {
             WorldManager.switchTo("simulation");
         }
     }
