@@ -16,6 +16,12 @@ public class SimWorld extends World
     private var paused:Boolean = true;
     private var dayCountLabel:TextEntity;
 
+    private var state:int = 0;
+
+    private const STATE_INITIAL:int = 0;
+    private const STATE_RUNNING:int = 1;
+    private const STATE_ANALYSIS:int = 2;
+
     public function SimWorld(simulation:Simulation)
     {
         super();
@@ -28,13 +34,13 @@ public class SimWorld extends World
     private function initializeHud():void
     {
         dayCountLabel = new TextEntity(
-                "0",
-                32,
-                20, 20
+            "0",
+            32,
+            20, 20
         );
 
         dayCountLabel.SetPrefix("Day ");
-        
+
         add(dayCountLabel);
     }
 
@@ -60,7 +66,7 @@ public class SimWorld extends World
     {
         super.update();
 
-        if ( ! paused) {
+        if (state == STATE_RUNNING) {
             simulation.Update();
         }
 
@@ -71,26 +77,41 @@ public class SimWorld extends World
 
     private function updateInput():void
     {
-        if (paused) {
+        if (state == STATE_INITIAL) {
             if (Input.pressed(Key.LEFT)) {
                 WorldManager.switchTo("title");
             }
             if (Input.pressed(Key.RIGHT)) {
-                paused = false;
+                ChangeState(STATE_RUNNING);
             }
-        } else {
-            if (Input.pressed(Key.RIGHT)) {
-                // change to analysis
-            }
+        } else if(state == STATE_RUNNING) {
             if (Input.pressed(Key.LEFT)) {
-                paused = true;
+                ChangeState(STATE_INITIAL);
+            }
+            if (Input.pressed(Key.RIGHT)) {
+                ChangeState(STATE_ANALYSIS);
+            }
+        } else if(state == STATE_ANALYSIS) {
+            if (Input.pressed(Key.LEFT)) {
+                ChangeState(STATE_RUNNING);
             }
         }
     }
 
+    private function ChangeState(state:int):void
+    {
+        if (state == STATE_RUNNING) {
+            paused = false;
+        }
+
+        this.state = state;
+    }
+
     private function updateMeepleColor():void
     {
-
+        for each (var meeple:Meeple in meeples) {
+            meeple.UpdateColor();
+        }
     }
 
     private function updateDayCount():void

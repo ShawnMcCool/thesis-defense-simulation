@@ -52,6 +52,11 @@ package Simulation
 		{
 			return event;
 		}
+
+        public function GetColor():Number
+        {
+            return color;
+        }
 	}
 
 }

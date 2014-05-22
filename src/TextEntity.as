@@ -19,7 +19,7 @@ public class TextEntity extends Entity
         SetText(text);
     }
 
-    public function SetPrefix(prefix:String)
+    public function SetPrefix(prefix:String):void
     {
         this.prefix = prefix;
     }

@@ -7,7 +7,7 @@ import Simulation.Simulation;
 
 public class Main extends Engine
 {
-    [Embed(source="../assets/ufonts.com_gillsans.ttf", embedAsCFF="false", fontFamily="Gill Sans")] const GILL_SANS:Class;
+    [Embed(source="../assets/ufonts.com_gillsans.ttf", embedAsCFF="false", fontFamily="Gill Sans")] public const GILL_SANS:Class;
 
     public function Main()
     {
