@@ -23,11 +23,11 @@ package Simulation
 			switch(state)
 			{
 				case 0:
-					return new IndividualState(0, 0xFF0000, eventCount);
+					return new IndividualState(0, 0x52a5e5, eventCount);
 				case 1:
-					return new IndividualState(.02, 0x00FF00, eventCount);
+					return new IndividualState(.02, 0xffe250, eventCount);
 				case 2:
-					return new IndividualState(.04, 0x0000FF, eventCount);
+					return new IndividualState(.04, 0xfe5054, eventCount);
 			}
 			
 			throw new Error("Covariate randomization error.");

@@ -15,7 +15,7 @@ public class Main extends Engine
 
         super(1024, 768, 60, true);
 
-        FP.screen.color = 0xC6C6C6;
+        FP.screen.color = 0xECECEC;
 
         WorldManager.add("title", new TitleScreen());
         WorldManager.add("simulation", new SimWorld(new Simulation));

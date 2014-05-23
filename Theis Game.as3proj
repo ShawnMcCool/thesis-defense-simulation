@@ -52,7 +52,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\flashpunk-1.7.2.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

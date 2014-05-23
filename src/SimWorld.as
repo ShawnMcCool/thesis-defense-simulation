@@ -35,6 +35,7 @@ public class SimWorld extends World
     {
         dayCountLabel = new TextEntity(
             "0",
+			0x000000,
             32,
             20, 20
         );

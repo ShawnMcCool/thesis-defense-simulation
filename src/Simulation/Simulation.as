@@ -26,13 +26,13 @@ public class Simulation
         frameCount++;
         if (frameCount == 60 / daysPerSecond) {
             frameCount = 0;
-            dayCount++;
             nextDay();
         }
     }
 
     public function nextDay():void
     {
+        dayCount++;
         for each(var individual:Individual in individuals) {
             individual.DailyUpdate();
         }
