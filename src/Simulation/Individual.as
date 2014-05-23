@@ -2,7 +2,7 @@ package Simulation
 {
 public class Individual
 {
-    private var baseHazardRate:Number = .02;
+    private var baseHazardRate:Number = .002;
     private var currentState:IndividualState;
     private var history:Vector.<IndividualState> = new Vector.<IndividualState>();
 

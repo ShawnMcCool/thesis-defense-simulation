@@ -22,7 +22,7 @@ public class SimWorld extends World
     private var state:int = 0;
 
     private var freedomSector:Sector = new Sector(0, 0, FP.halfWidth, FP.height);
-    private var jailSector:Sector = new Sector(FP.halfWidth, 0, FP.halfWidth, FP.height);
+	private var jailSector:Sector = new Sector(FP.width, 0, FP.halfWidth, FP.height);
 
     private const STATE_INITIAL:int = 0;
     private const STATE_RUNNING:int = 1;
