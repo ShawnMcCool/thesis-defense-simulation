@@ -1,5 +1,7 @@
 package
 {
+import flash.geom.Point;
+
 import net.flashpunk.Entity;
 import net.flashpunk.Mask;
 import net.flashpunk.graphics.Spritemap;
@@ -14,11 +16,24 @@ public class Meeple extends Entity
 
     private var individual:Individual;
 
+    private var homePoint:Point;
+    private var targetPoint:Point;
+    private var speed:Number = 8;
+    private var target:String = "home";
+
     public function Meeple(individual:Individual, x:Number = 0, y:Number = 0, mask:Mask = null)
     {
         super(x, y, sprMeeple);
+        homePoint = new Point(x, y);
+        type = "meeple";
         this.individual = individual;
+        setHitbox(0, 0, 0, 0);
         configureGraphics();
+    }
+
+    public function HadEvent():Boolean
+    {
+        return individual.HadEvent;
     }
 
     public function UpdateColor():void
@@ -26,14 +41,35 @@ public class Meeple extends Entity
         sprMeeple.color = individual.GetColor();// individual.GetColor();
     }
 
+    public function SetHomePoint(homePoint:Point)
+    {
+        this.homePoint = homePoint;
+    }
+
+    public function GoHome()
+    {
+        target = "home";
+    }
+
+    public function GoToTarget(targetPoint:Point)
+    {
+        target = "target";
+        this.targetPoint = targetPoint;
+    }
+
     override public function update():void
     {
         super.update();
+
+        if (target == "home") {
+            moveTowards(homePoint.x, homePoint.y, speed);
+        } else if (target == "target") {
+            moveTowards(targetPoint.x, targetPoint.y, speed);
+        }
     }
 
     private function configureGraphics():void
     {
-        type = "solid";
         graphic = sprMeeple;
 
         sprMeeple.add("stand", [0], 20, true);

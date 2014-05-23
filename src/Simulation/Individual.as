@@ -11,6 +11,11 @@ public class Individual
         assignNewState();
     }
 
+    public function HadEvent():Boolean
+    {
+        return currentState.HadEvent;
+    }
+
     public function GetColor():Number
     {
         return currentState.GetColor();

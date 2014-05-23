@@ -1,5 +1,8 @@
 package
 {
+import flash.geom.Point;
+
+import net.flashpunk.FP;
 import net.flashpunk.World;
 
 import Simulation.Individual;
@@ -18,6 +21,9 @@ public class SimWorld extends World
 
     private var state:int = 0;
 
+    private var freedomSector:Sector = new Sector(0, 0, FP.halfWidth, FP.height);
+    private var jailSector:Sector = new Sector(FP.halfWidth, 0, FP.halfWidth, FP.height);
+
     private const STATE_INITIAL:int = 0;
     private const STATE_RUNNING:int = 1;
     private const STATE_ANALYSIS:int = 2;
@@ -29,6 +35,7 @@ public class SimWorld extends World
 
         initializeMeeples();
         initializeHud();
+        freedomSector.setExclusionRadius(100);
     }
 
     private function initializeHud():void
@@ -52,7 +59,8 @@ public class SimWorld extends World
 
         for (var i:int = 0; i < 8; i++) {
             for (var j:int = 0; j < 13; j++) {
-                var meep:Meeple = new Meeple(individuals[j + i * j], 78 * j + 39, 80 * i + 168);
+                var meep:Meeple = new Meeple(individuals[j + i * j], FP.rand(FP.width), FP.rand(FP.height));
+                meep.SetHomePoint(new Point(78 * j + 39, 80 * i + 168));
                 meeples.push(meep);
                 add(meep);
                 counter++;
@@ -102,10 +110,34 @@ public class SimWorld extends World
     private function ChangeState(state:int):void
     {
         if (state == STATE_RUNNING) {
+            sendMeeplesHome();
             paused = false;
         }
 
+        if (state == STATE_ANALYSIS) {
+            sendMeeplesToJail();
+        }
+
         this.state = state;
+    }
+
+    private function sendMeeplesHome():void
+    {
+        for each (var meeple:Meeple in meeples) {
+            meeple.GoHome();
+        }
+    }
+
+    private function sendMeeplesToJail():void
+    {
+        for each (var meeple:Meeple in meeples) {
+            if (meeple.HadEvent()) {
+                meeple.GoToTarget(jailSector.getTargetPoint());
+            } else {
+                meeple.GoToTarget(freedomSector.getTargetPoint());
+            }
+        }
+
     }
 
     private function updateMeepleColor():void
