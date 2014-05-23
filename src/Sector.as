@@ -15,10 +15,12 @@ public class Sector
     private var collider:Entity = new Collider(24, 24);
 
     private var circleOrigin:Point;
-    private var circleRadius:int;
 
     private var exclusionCircleOrigin:Point;
     private var exclusionCircleRadius:int;
+
+    private var inclusionCircleOrigin:Point;
+    private var inclusionCircleRadius:int;
 
     public function Sector(x:int, y:int, width:int, height:int)
     {
@@ -28,7 +30,6 @@ public class Sector
         this.height = height;
 
         circleOrigin = new Point(x + width/2, y + height/2);
-        circleRadius = 200;
     }
 
     public function setExclusionRadius(radius:int):void
@@ -37,27 +38,36 @@ public class Sector
         exclusionCircleRadius = radius;
     }
 
+    public function setInclusionRadius(radius:int):void
+    {
+        inclusionCircleOrigin = circleOrigin;
+        inclusionCircleRadius = radius;
+    }
+
     public function getTargetPoint():Point
     {
         var point:Point;
 
         do {
             point = getRandomPoint();
-        } while ( ! fallsWithinBoundaries(point) || doesCollide(point));
+        } while ( ! fallsWithinBoundaries(point));
 
         return point;
     }
 
     private function fallsWithinBoundaries(point:Point):Boolean
     {
-        var fallsWithinCircle:Boolean = doesFallWithinCircle(circleOrigin, circleRadius, point);
-        var isExcluded:Boolean = true;
+        var passesClusion:Boolean = true;
 
         if (exclusionCircleOrigin) {
-             isExcluded = ! doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
+            passesClusion = ! doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
         }
 
-        return fallsWithinCircle && isExcluded;
+        if (inclusionCircleOrigin) {
+            passesClusion = doesFallWithinCircle(inclusionCircleOrigin, inclusionCircleRadius, point);
+        }
+
+        return passesClusion;
     }
 
     private function getRandomPoint():Point

@@ -10,7 +10,7 @@ import Simulation.Individual;
 
 public class Meeple extends Entity
 {
-    private const speed:Number = 8;
+    private const speed:Number = 16;
     private const eventScaleSize:Number = 2;
 
     [Embed(source="../assets/spritesheet-w.png")]
