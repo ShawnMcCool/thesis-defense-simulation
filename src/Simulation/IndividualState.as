@@ -25,9 +25,9 @@ package Simulation
 				case 0:
 					return new IndividualState(0, 0x52a5e5, eventCount);
 				case 1:
-					return new IndividualState(.02, 0xffe250, eventCount);
+					return new IndividualState(.004, 0xffe250, eventCount);
 				case 2:
-					return new IndividualState(.04, 0xfe5054, eventCount);
+					return new IndividualState(.008, 0xfe5054, eventCount);
 			}
 			
 			throw new Error("Covariate randomization error.");

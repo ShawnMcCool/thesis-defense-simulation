@@ -27,7 +27,7 @@ public class Sector
         this.width = width;
         this.height = height;
 
-        circleOrigin = new Point(x + (width/2), y + (height/2));
+        circleOrigin = new Point(x + (width), y + (height));
         circleRadius = width/2;
     }
 

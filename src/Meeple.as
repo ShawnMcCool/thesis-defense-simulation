@@ -33,7 +33,7 @@ public class Meeple extends Entity
 
     public function HadEvent():Boolean
     {
-        return individual.HadEvent;
+        return individual.HadEvent();
     }
 
     public function UpdateColor():void
