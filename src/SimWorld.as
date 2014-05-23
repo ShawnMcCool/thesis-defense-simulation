@@ -26,7 +26,8 @@ public class SimWorld extends World
 
     private const STATE_INITIAL:int = 0;
     private const STATE_RUNNING:int = 1;
-    private const STATE_ANALYSIS:int = 2;
+    private const STATE_JAIL_ANALYSIS:int = 2;
+    private const STATE_INDIVIDUAL_ANALYSIS:int = 3;
 
     public function SimWorld(simulation:Simulation)
     {
@@ -80,7 +81,7 @@ public class SimWorld extends World
         }
 
         updateDayCount();
-        updateMeepleColor();
+        updateMeepleStyle();
         updateInput();
     }
 
@@ -98,11 +99,18 @@ public class SimWorld extends World
                 ChangeState(STATE_INITIAL);
             }
             if (Input.pressed(Key.RIGHT)) {
-                ChangeState(STATE_ANALYSIS);
+                ChangeState(STATE_JAIL_ANALYSIS);
             }
-        } else if(state == STATE_ANALYSIS) {
+        } else if(state == STATE_JAIL_ANALYSIS) {
             if (Input.pressed(Key.LEFT)) {
                 ChangeState(STATE_RUNNING);
+            }
+            if (Input.pressed(Key.DOWN)) {
+                ChangeState(STATE_INDIVIDUAL_ANALYSIS);
+            }
+        } else if(state == STATE_INDIVIDUAL_ANALYSIS) {
+            if (Input.pressed(Key.DOWN)) {
+                ChangeState(STATE_JAIL_ANALYSIS);
             }
         }
     }
@@ -114,7 +122,7 @@ public class SimWorld extends World
             paused = false;
         }
 
-        if (state == STATE_ANALYSIS) {
+        if (state == STATE_JAIL_ANALYSIS) {
             sendMeeplesToJail();
         }
 
@@ -131,7 +139,7 @@ public class SimWorld extends World
     private function sendMeeplesToJail():void
     {
         for each (var meeple:Meeple in meeples) {
-            if (meeple.HadEvent()) {
+            if (meeple.HasEverHadAnEvent()) {
                 meeple.GoToTarget(jailSector.getTargetPoint());
             } else {
                 meeple.GoToTarget(freedomSector.getTargetPoint());
@@ -140,10 +148,10 @@ public class SimWorld extends World
 
     }
 
-    private function updateMeepleColor():void
+    private function updateMeepleStyle():void
     {
         for each (var meeple:Meeple in meeples) {
-            meeple.UpdateColor();
+            meeple.UpdateStyle();
         }
     }
 

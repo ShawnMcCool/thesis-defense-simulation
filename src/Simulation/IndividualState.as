@@ -7,7 +7,7 @@ package Simulation
 		private var beta:Number;
 		private var color:Number;
 		private var eventCount:int;
-		private var event:Boolean;
+		private var event:Boolean = false;
 		
 		public function IndividualState(beta:Number, color:Number, eventCount:int) 
 		{
@@ -43,7 +43,7 @@ package Simulation
 			return eventCount;
 		}
 		
-		public function EventOccurrs():void
+		public function EventOccurs():void
 		{
 			event = true;
 		}

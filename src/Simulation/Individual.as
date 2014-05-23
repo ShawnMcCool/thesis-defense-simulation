@@ -13,7 +13,15 @@ public class Individual
 
     public function HadEvent():Boolean
     {
-        return currentState.HadEvent;
+        return currentState.HadEvent();
+    }
+
+    public function HasEverHadAnEvent():Boolean
+    {
+        for each (var state:IndividualState in history) {
+            if (state.HadEvent()) return true;
+        }
+        return false;
     }
 
     public function GetColor():Number
@@ -24,7 +32,7 @@ public class Individual
     public function DailyUpdate():void
     {
         if (hasEvent()) {
-            currentState.EventOccurrs();
+            currentState.EventOccurs();
         }
         history.push(currentState);
         assignNewState();

@@ -33,12 +33,20 @@ public class Meeple extends Entity
 
     public function HadEvent():Boolean
     {
-        return individual.HadEvent;
+        return individual.HadEvent();
     }
 
-    public function UpdateColor():void
+    public function HasEverHadAnEvent():Boolean
+    {
+        return individual.HasEverHadAnEvent();
+    }
+
+    public function UpdateStyle():void
     {
         sprMeeple.color = individual.GetColor();// individual.GetColor();
+        if (HadEvent()) {
+            sprMeeple.scale = 2000;
+        }
     }
 
     public function SetHomePoint(homePoint:Point)
@@ -65,6 +73,13 @@ public class Meeple extends Entity
             moveTowards(homePoint.x, homePoint.y, speed);
         } else if (target == "target") {
             moveTowards(targetPoint.x, targetPoint.y, speed);
+        }
+
+        if (sprMeeple.scale > 1) {
+            sprMeeple.scale -= .02;
+        }
+        if (sprMeeple.scale < 1) {
+            sprMeeple.scale = 1;
         }
     }
 
