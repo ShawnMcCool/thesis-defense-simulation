@@ -27,8 +27,8 @@ public class Sector
         this.width = width;
         this.height = height;
 
-        circleOrigin = new Point(x + (width), y + (height));
-        circleRadius = width/2;
+        circleOrigin = new Point(x + width/2, y + height/2);
+        circleRadius = 200;
     }
 
     public function setExclusionRadius(radius:int):void
@@ -40,24 +40,31 @@ public class Sector
     public function getTargetPoint():Point
     {
         var point:Point;
-        var fallsWithinCircle:Boolean = false;
-        var collides:Boolean = false;
-        var isExcluded:Boolean = true;
 
-        while(( ! fallsWithinCircle || collides) && isExcluded) {
-//            private var freedomSector:Sector = new Sector(0, 0, FP.halfWidth, FP.height);
-            point = new Point(x + FP.rand(width), y + FP.rand(height));
-
-            fallsWithinCircle = doesFallWithinCircle(circleOrigin, circleRadius, point);
-            collides = doesCollide(point);
-
-            if (exclusionCircleOrigin) {
-                isExcluded = ! doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
-            }
-        } 
+        do {
+            point = getRandomPoint();
+        } while ( ! fallsWithinBoundaries(point) || doesCollide(point));
 
         return point;
     }
+
+    private function fallsWithinBoundaries(point:Point):Boolean
+    {
+        var fallsWithinCircle:Boolean = doesFallWithinCircle(circleOrigin, circleRadius, point);
+        var isExcluded:Boolean = true;
+
+        if (exclusionCircleOrigin) {
+             isExcluded = ! doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
+        }
+
+        return fallsWithinCircle && isExcluded;
+    }
+
+    private function getRandomPoint():Point
+    {
+        return new Point(x + FP.rand(width), y + FP.rand(height));
+    }
+
     private function doesCollide(point:Point):Boolean
     {
         return false;
@@ -65,7 +72,7 @@ public class Sector
     
     public function doesFallWithinCircle(origin:Point, radius:int, point:Point):Boolean
     {
-        return Math.sqrt((origin.x - point.x)^2 + (origin.y - point.y)^2) < radius;
+        return Math.sqrt(Math.pow(origin.x - point.x, 2) + Math.pow(origin.y - point.y, 2)) < radius;
     }
 }
 }

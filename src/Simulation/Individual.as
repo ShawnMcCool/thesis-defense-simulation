@@ -31,11 +31,11 @@ public class Individual
 
     public function DailyUpdate():void
     {
+        assignNewState();
         if (hasEvent()) {
             currentState.EventOccurs();
         }
         history.push(currentState);
-        assignNewState();
     }
 
     private function assignNewState():void

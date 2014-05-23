@@ -10,15 +10,16 @@ import Simulation.Individual;
 
 public class Meeple extends Entity
 {
+    private const speed:Number = 8;
+    private const eventScaleSize:Number = 2;
+
     [Embed(source="../assets/spritesheet-w.png")]
     protected var MEEPLE:Class;
+
     public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
-
     private var individual:Individual;
-
     private var homePoint:Point;
     private var targetPoint:Point;
-    private var speed:Number = 8;
     private var target:String = "home";
 
     public function Meeple(individual:Individual, x:Number = 0, y:Number = 0, mask:Mask = null)
@@ -45,21 +46,21 @@ public class Meeple extends Entity
     {
         sprMeeple.color = individual.GetColor();// individual.GetColor();
         if (HadEvent()) {
-            sprMeeple.scale = 2000;
+            sprMeeple.scale = eventScaleSize;
         }
     }
 
-    public function SetHomePoint(homePoint:Point)
+    public function SetHomePoint(homePoint:Point):void
     {
         this.homePoint = homePoint;
     }
 
-    public function GoHome()
+    public function GoHome():void
     {
         target = "home";
     }
 
-    public function GoToTarget(targetPoint:Point)
+    public function GoToTarget(targetPoint:Point):void
     {
         target = "target";
         this.targetPoint = targetPoint;
@@ -76,7 +77,7 @@ public class Meeple extends Entity
         }
 
         if (sprMeeple.scale > 1) {
-            sprMeeple.scale -= .02;
+            sprMeeple.scale -= .5;
         }
         if (sprMeeple.scale < 1) {
             sprMeeple.scale = 1;
