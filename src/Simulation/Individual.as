@@ -4,7 +4,7 @@ import net.flashpunk.FP;
 
 public class Individual
 {
-    private var baseHazardRate:Number = .00027;
+    private var baseHazardRate:Number = .0027;
     private var currentState:IndividualState;
     private var history:Vector.<IndividualState> = new Vector.<IndividualState>();
 
