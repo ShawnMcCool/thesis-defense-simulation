@@ -16,6 +16,11 @@ public class MeepleSprite extends Entity
         configureGraphics();
     }
 
+    public function setColor(color:Number):void
+    {
+        sprMeeple.color = color;
+    }
+
     private function configureGraphics():void
     {
         graphic = sprMeeple;

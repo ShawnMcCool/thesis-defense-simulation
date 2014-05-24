@@ -9,6 +9,8 @@ import Sprites.MeepleArray;
 import net.flashpunk.FP;
 
 import net.flashpunk.World;
+import net.flashpunk.utils.Input;
+import net.flashpunk.utils.Key;
 
 public class IndividualHistoryWorld extends World
 {
@@ -25,9 +27,26 @@ public class IndividualHistoryWorld extends World
         add(actualArray);
     }
 
+
+    override public function begin():void
+    {
+        super.begin();
+        displayMeeple();
+    }
+
+    override public function end():void
+    {
+        super.end();
+        FP.log("changed away");
+    }
+
     public function displayMeeple():void
     {
         var individual:Individual = selectIndividual();
+
+        if ( ! individual) {
+            return;
+        }
 
         for each (var state:IndividualState in individual.GetHistory()) {
             actualArray.addMeeple(state.GetColor());
@@ -44,6 +63,19 @@ public class IndividualHistoryWorld extends World
         }
         FP.log("No valid individuals found.");
         return null;
+    }
+
+    override public function update():void
+    {
+        super.update();
+        updateInput();
+    }
+
+    private function updateInput():void
+    {
+        if (Input.pressed(Key.LEFT)) {
+            WorldManager.switchTo("simulation");
+        }
     }
 
     private function meetsSelectionCriteria(individual:Individual):Boolean

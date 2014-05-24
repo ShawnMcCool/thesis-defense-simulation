@@ -126,6 +126,11 @@ public class SimWorld extends World
             if (Input.pressed(Key.RIGHT)) {
                 ChangeState(STATE_JAIL_ANALYSIS);
             }
+            if (Input.pressed(Key.DOWN)) {
+                for (var i:int = 0; i<50; i++) {
+                    simulation.nextDay();
+                }
+            }
         } else if (state == STATE_JAIL_ANALYSIS) {
             if (Input.pressed(Key.LEFT)) {
                 ChangeState(STATE_RUNNING);

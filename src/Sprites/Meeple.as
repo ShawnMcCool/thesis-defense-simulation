@@ -2,7 +2,6 @@ package Sprites
 {
 import flash.geom.Point;
 import net.flashpunk.Mask;
-import net.flashpunk.graphics.Spritemap;
 import Simulation.Individual;
 
 public class Meeple extends MeepleSprite
@@ -39,7 +38,7 @@ public class Meeple extends MeepleSprite
 
     public function UpdateStyle():void
     {
-        sprMeeple.color = individual.GetColor();// individual.GetColor();
+        setColor(individual.GetColor());
         if (HadEvent()) {
             sprMeeple.scale = eventScaleSize;
         }
