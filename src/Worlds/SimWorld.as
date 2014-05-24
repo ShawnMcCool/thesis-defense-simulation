@@ -11,9 +11,7 @@ import flash.geom.Point;
 
 import net.flashpunk.FP;
 import net.flashpunk.World;
-import net.flashpunk.Entity;
 import net.flashpunk.utils.Key;
-import net.flashpunk.utils.Draw;
 import net.flashpunk.utils.Input;
 
 import Simulation.Simulation;
@@ -132,12 +130,8 @@ public class SimWorld extends World
             if (Input.pressed(Key.LEFT)) {
                 ChangeState(STATE_RUNNING);
             }
-            if (Input.pressed(Key.DOWN)) {
-                ChangeState(STATE_INDIVIDUAL_ANALYSIS);
-            }
-        } else if (state == STATE_INDIVIDUAL_ANALYSIS) {
-            if (Input.pressed(Key.DOWN)) {
-                ChangeState(STATE_JAIL_ANALYSIS);
+            if (Input.pressed(Key.RIGHT)) {
+                WorldManager.switchTo("history");
             }
         }
     }
@@ -163,18 +157,6 @@ public class SimWorld extends World
         }
     }
 
-//    override public function render():void
-//    {
-//        super.render();
-//        var o:Array = new Array();
-//        getAll(o);
-//        for each (var e:Entity in o)
-//        {
-//            Draw.hitbox(e, true, 0xFF0000, 1);
-//        }
-//
-//    }
-
     private function sendMeeplesToJail():void
     {
         jailSector.resetCollision();
@@ -187,7 +169,6 @@ public class SimWorld extends World
                 meeple.GoToTarget(freedomSector.getTargetPoint());
             }
         }
-
     }
 
     private function updateMeepleStyle():void
