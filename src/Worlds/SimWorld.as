@@ -12,7 +12,7 @@ import net.flashpunk.utils.Input;
 
 import Simulation.Simulation;
 import Simulation.Individual;
-import Sprites.Meeple;
+import Sprites.SimulationMeeple;
 
 public class SimWorld extends World
 {
@@ -28,7 +28,7 @@ public class SimWorld extends World
     private var meepleEventCriteriaLabel:TextEntity;
 
     private var simulation:Simulation;
-    private var meeples:Vector.<Meeple> = new Vector.<Meeple>();
+    private var meeples:Vector.<SimulationMeeple> = new Vector.<SimulationMeeple>();
 
     private var freedomSector:Sector;
     private var jailSector:Sector;
@@ -47,7 +47,7 @@ public class SimWorld extends World
     private function initializeMeeples():void
     {
         for each (var individual:Individual in simulation.GetIndividuals()) {
-            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
+            var meeple:SimulationMeeple = new SimulationMeeple(individual, FP.rand(FP.width), FP.rand(FP.height));
             meeples.push(meeple);
             add(meeple);
         }
@@ -88,7 +88,7 @@ public class SimWorld extends World
         var row:int = 0;
         var col:int = 0;
 
-        for each (var meeple:Meeple in meeples) {
+        for each (var meeple:SimulationMeeple in meeples) {
             meeple.SetHomePoint(getRowColPoint(row, col));
 
             row++;
@@ -106,7 +106,7 @@ public class SimWorld extends World
         add(freedomSector);
 
         jailSector = new Sector(0, 100, FP.width, FP.height);
-        jailSector.setInclusionRadius(250);
+        jailSector.setInclusionRadius(150);
         add(jailSector);
     }
 
@@ -144,7 +144,7 @@ public class SimWorld extends World
                 ChangeState(STATE_JAIL_ANALYSIS);
             }
             if (Input.pressed(Key.DOWN)) {
-                for (var i:int = 0; i<50; i++) {
+                for (var i:int = simulation.GetDayCount(); i<30; i++) {
                     simulation.nextDay();
                 }
             }
@@ -174,7 +174,7 @@ public class SimWorld extends World
 
     private function sendMeeplesHome():void
     {
-        for each (var meeple:Meeple in meeples) {
+        for each (var meeple:SimulationMeeple in meeples) {
             meeple.GoHome();
         }
     }
@@ -184,7 +184,7 @@ public class SimWorld extends World
         jailSector.resetCollision();
         freedomSector.resetCollision();
 
-        for each (var meeple:Meeple in meeples) {
+        for each (var meeple:SimulationMeeple in meeples) {
             if (meeple.HasEverHadAnEvent()) {
                 meeple.GoToTarget(jailSector.getTargetPoint());
             } else {

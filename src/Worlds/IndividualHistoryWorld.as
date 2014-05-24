@@ -1,10 +1,16 @@
 package Worlds
 {
 import Simulation.Individual;
-import Simulation.IndividualState;
 import Simulation.Simulation;
 
-import Sprites.MeepleArray;
+import Sprites.ActualMeepleArray;
+
+import Sprites.IntervalMeepleArray;
+import Sprites.PoissonMeepleArray;
+import Sprites.ProportionalMeepleArray;
+import Sprites.RecordedMeepleArray;
+
+import Utils.TextEntity;
 
 import net.flashpunk.World;
 import net.flashpunk.utils.Input;
@@ -15,33 +21,83 @@ public class IndividualHistoryWorld extends World
     private var simulation:Simulation;
     private var meepleIndex:int = 1;
 
-    private var actualArray:MeepleArray = new MeepleArray(80, 100);
+    private var actualArray:ActualMeepleArray;
+    private var recordedArray:RecordedMeepleArray;
+    private var poissonArray:PoissonMeepleArray;
+    private var intervalArray:IntervalMeepleArray;
+    private var proportionalArray:ProportionalMeepleArray;
 
     public function IndividualHistoryWorld(simulation:Simulation)
     {
         super();
         this.simulation = simulation;
+        initializeLabels();
+    }
+
+    private function initializeArrays():void
+    {
+        var individual:Individual = selectIndividual();
+
+        actualArray = new ActualMeepleArray(individual, 100, 100);
         add(actualArray);
+        recordedArray = new RecordedMeepleArray(individual, 100, 200);
+        add(recordedArray);
+        poissonArray = new PoissonMeepleArray(individual, 100, 300);
+        add(poissonArray);
+        intervalArray = new IntervalMeepleArray(individual, 100, 400);
+        add(intervalArray);
+        proportionalArray = new ProportionalMeepleArray(individual, 100, 500);
+        add(proportionalArray);
+    }
+
+    private function initializeLabels():void
+    {
+        var actualLabel:TextEntity = new TextEntity(
+            "Actual",
+            0x000000,
+            32,
+            30, 80
+        );
+        add(actualLabel);
+
+        var recordedLabel:TextEntity = new TextEntity(
+            "Recorded",
+            0x000000,
+            32,
+            30, 180
+        );
+        add(recordedLabel);
+
+        var poissonLabel:TextEntity = new TextEntity(
+            "Poisson\nEquivalent",
+            0x000000,
+            32,
+            30, 280
+        );
+        add(poissonLabel);
+
+        var intervalLabel:TextEntity = new TextEntity(
+            "Interval\nStable",
+            0x000000,
+            32,
+            30, 380
+        );
+        add(intervalLabel);
+
+        var proportionalLabel:TextEntity = new TextEntity(
+            "Pro-\nportional",
+            0x000000,
+            32,
+            30, 480
+        );
+        add(proportionalLabel);
+
     }
 
     override public function begin():void
     {
         super.begin();
-        actualArray.clear();
-        displayNextMeeple();
-    }
-
-    public function displayNextMeeple():void
-    {
-        var individual:Individual = selectIndividual();
-
-        if (!individual) {
-            return;
-        }
-
-        for each (var state:IndividualState in individual.GetHistory()) {
-            actualArray.addMeeple(state.GetColor());
-        }
+        initializeArrays();
     }
 
     public function selectIndividual():Individual
@@ -60,7 +116,7 @@ public class IndividualHistoryWorld extends World
         }
 
         meepleIndex = 1;
-        return null;
+        return selectIndividual();
     }
 
     override public function update():void
@@ -75,8 +131,12 @@ public class IndividualHistoryWorld extends World
             WorldManager.switchTo("simulation");
         }
         if (Input.pressed(Key.DOWN)) {
-            actualArray.clear();
-            displayNextMeeple();
+            remove(actualArray);
+            remove(recordedArray);
+            remove(poissonArray);
+            remove(intervalArray);
+            remove(proportionalArray);
+            initializeArrays();
         }
     }
 

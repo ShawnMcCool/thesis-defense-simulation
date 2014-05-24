@@ -1,84 +1,39 @@
 package Sprites
 {
-import flash.geom.Point;
-import Simulation.Individual;
+import net.flashpunk.Entity;
+import net.flashpunk.graphics.Spritemap;
 
-public class Meeple extends MeepleSprite
+public class Meeple extends Entity
 {
-    private const speed:Number = 16;
-    private const eventScaleSize:Number = 2;
+    [Embed(source="../../assets/spritesheet-w.png")]
+    protected var MEEPLE:Class;
+    public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
 
-    private var individual:Individual;
-    private var homePoint:Point;
-    private var targetPoint:Point;
-    private var target:String = "home";
-
-    public function Meeple(individual:Individual, x:Number = 0, y:Number = 0)
+    public function Meeple(x:Number = 0, y:Number = 0, scale:Number = 1)
     {
-        super(x, y, .2);
-        homePoint = new Point(x, y);
-        this.individual = individual;
+        super(x, y, sprMeeple);
+        sprMeeple.scale = scale;
+        setHitbox(0, 0, 0, 0);
+        configureGraphics();
     }
 
-    public function HadEvent():Boolean
+    public function setColor(color:Number):void
     {
-        return individual.HadEvent();
+        sprMeeple.color = color;
     }
 
-    public function GetTotalEventCount():int
+    public function getColor():Number
     {
-        return individual.GetTotalEventCount();
+        return sprMeeple.color;
     }
 
-    public function HasEverHadAnEvent():Boolean
+    private function configureGraphics():void
     {
-        return individual.HasEverHadAnEvent();
-    }
-
-    public function SetHomePoint(homePoint:Point):void
-    {
-        this.homePoint = homePoint;
-    }
-
-    public function GoHome():void
-    {
-        target = "home";
-    }
-
-    public function GoToTarget(targetPoint:Point):void
-    {
-        target = "target";
-        this.targetPoint = targetPoint;
-    }
-
-    override public function update():void
-    {
-        super.update();
-        updateStyles();
-        updateTargeting();
-    }
-
-    private function updateTargeting():void
-    {
-        if (target == "home") {
-            moveTowards(homePoint.x, homePoint.y, speed);
-        } else if (target == "target") {
-            moveTowards(targetPoint.x, targetPoint.y, speed);
-        }
-    }
-
-    private function updateStyles():void
-    {
-        setColor(individual.GetColor());
-        if (HadEvent()) {
-            sprMeeple.scale = eventScaleSize;
-        }
-        if (sprMeeple.scale > 1) {
-            sprMeeple.scale -= .5;
-        }
-        if (sprMeeple.scale < 1) {
-            sprMeeple.scale = 1;
-        }
+        graphic = sprMeeple;
+        sprMeeple.add("stand", [0], 20, true);
+        sprMeeple.add("wiggle", [0, 1, 2, 3], 20, true);
+        sprMeeple.centerOrigin();
+        centerOrigin();
     }
 }
 }

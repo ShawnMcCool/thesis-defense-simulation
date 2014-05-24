@@ -5,10 +5,11 @@ import net.flashpunk.FP;
 
 public class MeepleArray extends Entity
 {
-    private var horizontalMargin:int = 40;
-    private var verticalMargin:int = 40;
+    protected var horizontalMargin:int = 40;
+    protected var verticalMargin:int = 40;
+    private var leftOffset:int = 100;
 
-    private var meeples:Vector.<MeepleSprite> = new Vector.<MeepleSprite>();
+    protected var meeples:Vector.<Meeple> = new Vector.<Meeple>();
 
     public function MeepleArray(horizontalMargin:int, verticalMargin:int)
     {
@@ -16,30 +17,38 @@ public class MeepleArray extends Entity
         this.verticalMargin = verticalMargin;
     }
 
-    public function addMeeple(color:Number):void
+    public function addMeeple(meeple:Meeple):void
     {
-        var meeple:MeepleSprite = new MeepleSprite(20, 20, 1);
-        meeple.setColor(color);
         meeples.push(meeple);
         world.add(meeple);
         orderMeeples();
     }
 
+    public function getAll():Vector.<Meeple>
+    {
+        return meeples;
+    }
+
+    public function getIndex(index:int):Meeple
+    {
+        return meeples[index];
+    }
+
     public function clear():void
     {
-        var meeple:MeepleSprite;
+        var meeple:Meeple;
         while (meeple = meeples.pop()) {
             world.remove(meeple);
         }
     }
 
-    private function orderMeeples():void
+    protected function orderMeeples():void
     {
         var widthPer:int = getWidthPer();
         var i:int = 0;
 
-        for each (var meeple:MeepleSprite in meeples) {
-            meeple.x = horizontalMargin + widthPer*i;
+        for each (var meeple:Meeple in meeples) {
+            meeple.x = leftOffset + horizontalMargin + widthPer*i;
             meeple.y = verticalMargin;
             i++;
         }

@@ -2,10 +2,11 @@ package Simulation
 {
 public class Simulation
 {
-    private var daysPerSecond:int = 4;
+    private var daysPerSecond:int = 2;
     private var numberOfIndividuals:int = 104;
     private var numberOfProblemChildren:int = 4;
     private var problemChildHazardRate:Number = .2;
+    private var maxNumberOfSimulatedDays:int = 30;
 
     private var frameCount:int = 0;
     private var dayCount:int = 0;
@@ -29,6 +30,10 @@ public class Simulation
 
     public function Update():void
     {
+        if (GetDayCount() >= maxNumberOfSimulatedDays) {
+            return;
+        }
+
         frameCount++;
         if (frameCount == 60 / daysPerSecond) {
             frameCount = 0;
