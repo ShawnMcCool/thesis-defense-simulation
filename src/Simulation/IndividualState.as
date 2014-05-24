@@ -16,6 +16,12 @@ package Simulation
 			this.eventCount = eventCount;
 		}
 		
+		public static function DoesStateChange():Boolean
+		{
+			return (FP.rand(9) < 2);
+			
+		}
+		
 		public static function GenerateNewState(eventCount:int):IndividualState
 		{
 			var state:int = FP.choose(0, 1, 2);
@@ -31,6 +37,12 @@ package Simulation
 			}
 			
 			throw new Error("Covariate randomization error.");
+		}
+		
+		
+		public function DuplicateStateWithoutEvent():IndividualState
+		{
+			return new IndividualState(GetBeta(), GetColor(), GetEventCount());
 		}
 		
 		public function GetBeta():Number
