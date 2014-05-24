@@ -8,7 +8,7 @@ public class Individual
 
     public function Individual()
     {
-        assignNewState();
+        currentState = IndividualState.GenerateNewState(0);
     }
 
     public function GetTotalEventCount():int
@@ -54,7 +54,13 @@ public class Individual
     private function assignNewState():void
     {
         var eventCount:Number = this.currentState ? this.currentState.GetEventCount() : 0;
-        this.currentState = IndividualState.GenerateNewState(eventCount);
+         
+		if (IndividualState.DoesStateChange()){
+			this.currentState = IndividualState.GenerateNewState(eventCount);
+		} else {
+			this.currentState = this.currentState.DuplicateStateWithoutEvent();
+		}
+		
     }
 
     private function getHazardRate():Number
