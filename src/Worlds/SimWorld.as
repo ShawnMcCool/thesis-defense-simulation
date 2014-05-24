@@ -1,5 +1,7 @@
 package Worlds
 {
+import Simulation.Individual;
+
 import Sprites.Meeple;
 
 import Utils.Sector;
@@ -34,7 +36,7 @@ public class SimWorld extends World
     private const STATE_JAIL_ANALYSIS:int = 2;
     private const STATE_INDIVIDUAL_ANALYSIS:int = 3;
 
-    public function SimWorld(simulation:Simulation, meeples:Vector.<Meeple>)
+    public function SimWorld(simulation:Simulation)
     {
         super();
         this.simulation = simulation;
@@ -49,7 +51,7 @@ public class SimWorld extends World
         add(freedomSector);
 
         jailSector = new Sector(0, 100, FP.width, FP.height);
-        jailSector.setInclusionRadius(200);
+        jailSector.setInclusionRadius(250);
         add(jailSector);
     }
 
@@ -74,7 +76,9 @@ public class SimWorld extends World
 
     private function initializeMeeples():void
     {
-        for each (var meeple:Meeple in meeples) {
+        for each (var individual:Individual in simulation.GetIndividuals()) {
+            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
+            meeples.push(meeple);
             add(meeple);
         }
     }
@@ -159,17 +163,17 @@ public class SimWorld extends World
         }
     }
 
-    override public function render():void
-    {
-        super.render();
-        var o:Array = new Array();
-        getAll(o);
-        for each (var e:Entity in o)
-        {
-            Draw.hitbox(e, true, 0xFF0000, 1);
-        }
-
-    }
+//    override public function render():void
+//    {
+//        super.render();
+//        var o:Array = new Array();
+//        getAll(o);
+//        for each (var e:Entity in o)
+//        {
+//            Draw.hitbox(e, true, 0xFF0000, 1);
+//        }
+//
+//    }
 
     private function sendMeeplesToJail():void
     {

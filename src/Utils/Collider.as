@@ -16,7 +16,7 @@ public class Collider extends Entity
         centerOrigin();
     }
 
-    public function collidesWith(point:Point):Boolean
+    public function collidesWith(point:Point):Entity
     {
         return collide("targetCollider", point.x, point.y);
     }

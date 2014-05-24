@@ -7,7 +7,9 @@ import net.flashpunk.FP;
 
 public class Sector extends Entity
 {
-    private var colliderSize:Point = new Point(20, 20);
+    private var colliderSize:Point = new Point(30, 30);
+    private var borderMargin:int = 20;
+
     private var collider:Collider = new Collider(colliderSize, "collider");;
     private var colliderPool:Vector.<Collider> = new Vector.<Collider>();
     private var colliderIndex:int = 0;
@@ -80,7 +82,16 @@ public class Sector extends Entity
 
     private function fallsWithinBoundaries(point:Point):Boolean
     {
+        var withinMargin:Boolean = true;
         var passesClusion:Boolean = true;
+
+        if (point.x < borderMargin || point.x > FP.width - borderMargin) {
+            withinMargin = false;
+        }
+
+        if (point.y < borderMargin || point.y > FP.height - borderMargin) {
+            withinMargin = false;
+        }
 
         if (exclusionCircleOrigin) {
             passesClusion = !doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
@@ -90,7 +101,7 @@ public class Sector extends Entity
             passesClusion = doesFallWithinCircle(inclusionCircleOrigin, inclusionCircleRadius, point);
         }
 
-        return passesClusion;
+        return withinMargin && passesClusion;
     }
 
     private function getRandomPoint():Point

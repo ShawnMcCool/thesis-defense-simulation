@@ -37,6 +37,11 @@ public class Meeple extends Entity
         return individual.HadEvent();
     }
 
+    public function GetTotalEventCount():int
+    {
+        return individual.GetTotalEventCount();
+    }
+
     public function HasEverHadAnEvent():Boolean
     {
         return individual.HasEverHadAnEvent();

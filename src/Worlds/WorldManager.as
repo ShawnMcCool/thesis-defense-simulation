@@ -22,15 +22,10 @@ public class WorldManager
     public static function init():void
     {
         var simulation:Simulation = new Simulation();
-        var meeples:Vector.<Meeple> = new Vector.<Meeple>();
 
-        for each (var individual:Individual in simulation.GetIndividuals()) {
-            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
-            meeples.push(meeple);
-        }
-
-        add("title", new TitleScreen());
-        add("simulation", new SimWorld(simulation, meeples));
+        add("title", new TitleWorld());
+        add("simulation", new SimWorld(simulation));
+        add("history", new IndividualHistoryWorld(simulation));
     }
 
     public static function add(name:String, world:World):void

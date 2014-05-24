@@ -7,12 +7,12 @@ import net.flashpunk.FP;
 import net.flashpunk.utils.Input;
 import net.flashpunk.utils.Key;
 
-public class TitleScreen extends World
+public class TitleWorld extends World
 {
     private var titleEntity:TextEntity;
     private var authorEntity:TextEntity;
 
-    public function TitleScreen()
+    public function TitleWorld()
     {
         renderAuthors();
         renderTitle();

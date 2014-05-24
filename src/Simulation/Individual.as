@@ -11,6 +11,19 @@ public class Individual
         assignNewState();
     }
 
+    public function GetTotalEventCount():int
+    {
+        var events:int = 0;
+
+        for each (var state:IndividualState in history) {
+            if (state.HadEvent()) {
+                events++;
+            }
+        }
+
+        return events;
+    }
+
     public function HadEvent():Boolean
     {
         return currentState.HadEvent();
