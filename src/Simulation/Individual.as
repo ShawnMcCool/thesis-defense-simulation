@@ -1,5 +1,7 @@
 package Simulation
 {
+import net.flashpunk.FP;
+
 public class Individual
 {
     private var baseHazardRate:Number = .00027;
@@ -45,7 +47,7 @@ public class Individual
                 return history.indexOf(state);
             }
         }
-        return null;
+        return 0;
     }
 
     public function HadEvent():Boolean

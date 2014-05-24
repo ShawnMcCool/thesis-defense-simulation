@@ -14,9 +14,9 @@ public class Meeple extends MeepleSprite
     private var targetPoint:Point;
     private var target:String = "home";
 
-    public function Meeple(individual:Individual, x:Number = 0, y:Number = 0, mask:Mask = null)
+    public function Meeple(individual:Individual, x:Number = 0, y:Number = 0)
     {
-        super(x, y);
+        super(x, y, .2);
         homePoint = new Point(x, y);
         this.individual = individual;
     }

@@ -27,7 +27,6 @@ public class MeepleArray extends Entity
         while (meeple = meeples.pop()) {
             world.remove(meeple);
         }
-        FP.log(meeples.length);
     }
 
     private function orderMeeples():void

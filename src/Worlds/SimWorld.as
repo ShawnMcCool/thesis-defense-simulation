@@ -11,6 +11,7 @@ import flash.geom.Point;
 
 import net.flashpunk.FP;
 import net.flashpunk.World;
+import net.flashpunk.graphics.Text;
 import net.flashpunk.utils.Key;
 import net.flashpunk.utils.Input;
 
@@ -23,6 +24,7 @@ public class SimWorld extends World
 
     private var paused:Boolean = true;
     private var dayCountLabel:TextEntity;
+    private var meepleEventCriteriaLabel:TextEntity;
 
     private var state:int = 0;
 
@@ -66,10 +68,17 @@ public class SimWorld extends World
             32,
             20, 20
         );
-
         dayCountLabel.SetPrefix("Day ");
-
         add(dayCountLabel);
+
+        meepleEventCriteriaLabel = new TextEntity(
+            "0",
+            0x000000,
+            32,
+            200, 20
+        );
+        meepleEventCriteriaLabel.SetPrefix(">2 Events: ");
+        add (meepleEventCriteriaLabel);
     }
 
     private function initializeMeeples():void
@@ -105,7 +114,7 @@ public class SimWorld extends World
             simulation.Update();
         }
 
-        updateDayCount();
+        updateLabels();
         updateMeepleStyle();
         updateInput();
     }
@@ -183,9 +192,10 @@ public class SimWorld extends World
         }
     }
 
-    private function updateDayCount():void
+    private function updateLabels():void
     {
         dayCountLabel.SetText(simulation.GetDayCount().toString());
+        meepleEventCriteriaLabel.SetText(simulation.GetNumberOfIndividualsWithMoreEventsThan(2).toString());
     }
 }
 }

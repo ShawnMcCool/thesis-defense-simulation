@@ -6,8 +6,6 @@ import Simulation.Simulation;
 
 import Sprites.MeepleArray;
 
-import net.flashpunk.FP;
-
 import net.flashpunk.World;
 import net.flashpunk.utils.Input;
 import net.flashpunk.utils.Key;
@@ -15,7 +13,7 @@ import net.flashpunk.utils.Key;
 public class IndividualHistoryWorld extends World
 {
     private var simulation:Simulation;
-    private var meepleIndex:int = 0;
+    private var meepleIndex:int = 1;
 
     private var actualArray:MeepleArray = new MeepleArray();
 
@@ -39,7 +37,7 @@ public class IndividualHistoryWorld extends World
     {
         var individual:Individual = selectIndividual();
 
-        if ( ! individual) {
+        if (!individual) {
             return;
         }
 
@@ -50,14 +48,19 @@ public class IndividualHistoryWorld extends World
 
     public function selectIndividual():Individual
     {
+        var individuals:Vector.<Individual> = simulation.GetIndividuals();
+
         var counter:int = 0;
-        for each (var individual:Individual in simulation.GetIndividuals()) {
-            if (meetsSelectionCriteria(individual) && counter >= meepleIndex) {
-                meepleIndex++;
-                return individual;
+        for each (var individual:Individual in individuals) {
+            if (meetsSelectionCriteria(individual)) {
+                counter++;
+                if (counter >= meepleIndex) {
+                    meepleIndex++;
+                    return individual;
+                }
             }
-            counter++;
         }
+        meepleIndex = 1;
         return null;
     }
 
@@ -71,6 +74,11 @@ public class IndividualHistoryWorld extends World
     {
         if (Input.pressed(Key.LEFT)) {
             WorldManager.switchTo("simulation");
+        }
+
+        if (Input.pressed(Key.DOWN)) {
+            actualArray.clear();
+            displayMeeple();
         }
     }
 
