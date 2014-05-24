@@ -112,7 +112,6 @@ public class Sector extends Entity
     private function collides(point:Point):Boolean
     {
         if (collider.collidesWith(point)) {
-            FP.log("collision detected");
             return true;
         }
 

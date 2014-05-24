@@ -24,6 +24,11 @@ public class Individual
         return events;
     }
 
+    public function GetHistory():Vector.<IndividualState>
+    {
+        return history;
+    }
+
     public function HadEvent():Boolean
     {
         return currentState.HadEvent();
