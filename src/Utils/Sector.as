@@ -1,18 +1,16 @@
-package
+package Utils
 {
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 
-public class Sector
+public class Sector extends Entity
 {
-    private var height:int;
-    private var x:int;
-    private var y:int;
-    private var width:int;
-
-    private var collider:Entity = new Collider(24, 24);
+    private var colliderSize:Point = new Point(20, 20);
+    private var collider:Collider = new Collider(colliderSize, "collider");;
+    private var colliderPool:Vector.<Collider> = new Vector.<Collider>();
+    private var colliderIndex:int = 0;
 
     private var circleOrigin:Point;
 
@@ -29,7 +27,21 @@ public class Sector
         this.width = width;
         this.height = height;
 
-        circleOrigin = new Point(x + width/2, y + height/2);
+        circleOrigin = new Point(x + width / 2, y + height / 2);
+    }
+
+    override public function added():void
+    {
+        super.added();
+
+        world.add(collider);
+
+        for (var i:int = 0; i < 104; i++) {
+            var newCollider:Collider = new Collider(colliderSize, "targetCollider");
+            colliderPool.push(newCollider);
+            world.add(newCollider);
+        }
+
     }
 
     public function setExclusionRadius(radius:int):void
@@ -44,13 +56,24 @@ public class Sector
         inclusionCircleRadius = radius;
     }
 
+    public function resetCollision():void
+    {
+        colliderIndex = 0;
+        for each (var collider:Collider in colliderPool) {
+            collider.x = 0;
+            collider.y = 0;
+        }
+    }
+
     public function getTargetPoint():Point
     {
         var point:Point;
 
         do {
-            point = getRandomPoint();
-        } while ( ! fallsWithinBoundaries(point));
+            do {
+                point = getRandomPoint();
+            } while ( ! fallsWithinBoundaries(point));
+        } while (collides(point));
 
         return point;
     }
@@ -60,7 +83,7 @@ public class Sector
         var passesClusion:Boolean = true;
 
         if (exclusionCircleOrigin) {
-            passesClusion = ! doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
+            passesClusion = !doesFallWithinCircle(exclusionCircleOrigin, exclusionCircleRadius, point);
         }
 
         if (inclusionCircleOrigin) {
@@ -75,11 +98,24 @@ public class Sector
         return new Point(x + FP.rand(width), y + FP.rand(height));
     }
 
-    private function doesCollide(point:Point):Boolean
+    private function collides(point:Point):Boolean
     {
+        if (collider.collidesWith(point)) {
+            FP.log("collision detected");
+            return true;
+        }
+
+        colliderPool[colliderIndex].x = point.x;
+        colliderPool[colliderIndex].y = point.y;
+
+        colliderIndex++;
+        if (colliderIndex >= colliderPool.length) {
+            colliderIndex = 0;
+        }
+
         return false;
     }
-    
+
     public function doesFallWithinCircle(origin:Point, radius:int, point:Point):Boolean
     {
         return Math.sqrt(Math.pow(origin.x - point.x, 2) + Math.pow(origin.y - point.y, 2)) < radius;

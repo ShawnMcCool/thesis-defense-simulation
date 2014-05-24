@@ -1,15 +1,20 @@
-package
+package Worlds
 {
+import Sprites.Meeple;
+
+import Utils.Sector;
+import Utils.TextEntity;
+
 import flash.geom.Point;
 
 import net.flashpunk.FP;
 import net.flashpunk.World;
-
-import Simulation.Individual;
-import Simulation.Simulation;
-
-import net.flashpunk.utils.Input;
+import net.flashpunk.Entity;
 import net.flashpunk.utils.Key;
+import net.flashpunk.utils.Draw;
+import net.flashpunk.utils.Input;
+
+import Simulation.Simulation;
 
 public class SimWorld extends World
 {
@@ -29,21 +34,23 @@ public class SimWorld extends World
     private const STATE_JAIL_ANALYSIS:int = 2;
     private const STATE_INDIVIDUAL_ANALYSIS:int = 3;
 
-    public function SimWorld(simulation:Simulation)
+    public function SimWorld(simulation:Simulation, meeples:Vector.<Meeple>)
     {
         super();
         this.simulation = simulation;
+        this.meeples = meeples;
 
         initializeMeeples();
+        initializeHud();
         setMeepleHomes();
 
-        initializeHud();
-
-        freedomSector = new Sector(0, 0, FP.width, FP.height);
+        freedomSector = new Sector(0, 100, FP.width, FP.height);
         freedomSector.setExclusionRadius(380);
+        add(freedomSector);
 
-        jailSector = new Sector(0, 0, FP.width, FP.height);
+        jailSector = new Sector(0, 100, FP.width, FP.height);
         jailSector.setInclusionRadius(200);
+        add(jailSector);
     }
 
     private function getPointFor(row:int, col:int):Point
@@ -67,9 +74,7 @@ public class SimWorld extends World
 
     private function initializeMeeples():void
     {
-        for each (var individual:Individual in simulation.GetIndividuals()) {
-            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
-            meeples.push(meeple);
+        for each (var meeple:Meeple in meeples) {
             add(meeple);
         }
     }
@@ -154,8 +159,23 @@ public class SimWorld extends World
         }
     }
 
+    override public function render():void
+    {
+        super.render();
+        var o:Array = new Array();
+        getAll(o);
+        for each (var e:Entity in o)
+        {
+            Draw.hitbox(e, true, 0xFF0000, 1);
+        }
+
+    }
+
     private function sendMeeplesToJail():void
     {
+        jailSector.resetCollision();
+        freedomSector.resetCollision();
+
         for each (var meeple:Meeple in meeples) {
             if (meeple.HasEverHadAnEvent()) {
                 meeple.GoToTarget(jailSector.getTargetPoint());

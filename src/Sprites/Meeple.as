@@ -1,4 +1,4 @@
-package
+package Sprites
 {
 import flash.geom.Point;
 
@@ -13,7 +13,7 @@ public class Meeple extends Entity
     private const speed:Number = 16;
     private const eventScaleSize:Number = 2;
 
-    [Embed(source="../assets/spritesheet-w.png")]
+    [Embed(source="../../assets/spritesheet-w.png")]
     protected var MEEPLE:Class;
 
     public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
@@ -87,12 +87,10 @@ public class Meeple extends Entity
     private function configureGraphics():void
     {
         graphic = sprMeeple;
-
         sprMeeple.add("stand", [0], 20, true);
         sprMeeple.add("wiggle", [0, 1, 2, 3], 20, true);
         sprMeeple.centerOrigin();
-
-        setHitboxTo(graphic);
+        centerOrigin();
     }
 }
 }

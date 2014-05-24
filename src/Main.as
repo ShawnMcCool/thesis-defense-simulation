@@ -1,5 +1,7 @@
 package
 {
+import Worlds.WorldManager;
+
 import net.flashpunk.Engine;
 import net.flashpunk.FP;
 import net.flashpunk.graphics.Text;
@@ -16,10 +18,9 @@ public class Main extends Engine
         super(1024, 768, 60, true);
 
         FP.screen.color = 0xECECEC;
+        FP.console.enable();
 
-        WorldManager.add("title", new TitleScreen());
-        WorldManager.add("simulation", new SimWorld(new Simulation));
-
+        WorldManager.init();
         WorldManager.switchTo("title");
     }
 

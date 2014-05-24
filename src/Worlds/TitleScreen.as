@@ -1,5 +1,7 @@
-package
+package Worlds
 {
+import Utils.TextEntity;
+
 import net.flashpunk.World;
 import net.flashpunk.FP;
 import net.flashpunk.utils.Input;
