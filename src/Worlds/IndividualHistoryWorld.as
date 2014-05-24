@@ -15,7 +15,7 @@ public class IndividualHistoryWorld extends World
     private var simulation:Simulation;
     private var meepleIndex:int = 1;
 
-    private var actualArray:MeepleArray = new MeepleArray();
+    private var actualArray:MeepleArray = new MeepleArray(80, 100);
 
     public function IndividualHistoryWorld(simulation:Simulation)
     {
