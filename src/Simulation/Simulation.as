@@ -4,6 +4,8 @@ public class Simulation
 {
     private var daysPerSecond:int = 4;
     private var numberOfIndividuals:int = 104;
+    private var numberOfProblemChildren:int = 4;
+    private var problemChildHazardRate:Number = .2;
 
     private var frameCount:int = 0;
     private var dayCount:int = 0;
@@ -11,8 +13,12 @@ public class Simulation
 
     public function Simulation()
     {
-        for (var i:int = 0; i < numberOfIndividuals; i++) {
+        for (var i:int = 0; i < numberOfIndividuals - numberOfProblemChildren; i++) {
             individuals.push(new Individual);
+        }
+
+        for (var j:int = 0; j < numberOfProblemChildren; j++) {
+            individuals.push(new Individual(problemChildHazardRate));
         }
     }
 
@@ -43,22 +49,16 @@ public class Simulation
         return dayCount;
     }
 
-    public function GetNumberOfIndividualsWithEvents():Number
+    public function CountIndividualsWithEvents():Number
     {
-        var counter:int = 0;
-        for each (var individual:Individual in individuals) {
-            if (individual.HasEverHadAnEvent()) {
-                counter++;
-            }
-        }
-        return counter;
+        return CountIndividualsWithMinimumEvents(1);
     }
 
-    public function GetNumberOfIndividualsWithMoreEventsThan(number:Number):Number
+    public function CountIndividualsWithMinimumEvents(number:Number):Number
     {
         var counter:int = 0;
         for each (var individual:Individual in individuals) {
-            if (individual.GetTotalEventCount() > number) {
+            if (individual.GetTotalEventCount() >= number) {
                 counter++;
             }
         }

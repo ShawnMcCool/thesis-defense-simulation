@@ -1,16 +1,38 @@
 package Simulation
 {
-import net.flashpunk.FP;
-
 public class Individual
 {
-    private var baseHazardRate:Number = .0027;
+    private var baseHazardRate:Number;
     private var currentState:IndividualState;
     private var history:Vector.<IndividualState> = new Vector.<IndividualState>();
 
-    public function Individual()
+    public function Individual(baseHazardRate:Number = .002)
     {
+        this.baseHazardRate = baseHazardRate;
         currentState = IndividualState.GenerateNewState(0);
+    }
+
+    public function GetHistory():Vector.<IndividualState>
+    {
+        return history;
+    }
+
+    public function HadEvent():Boolean
+    {
+        return currentState.HadEvent();
+    }
+
+    public function GetColor():Number
+    {
+        return currentState.GetColor();
+    }
+
+    public function HasEverHadAnEvent():Boolean
+    {
+        for each (var state:IndividualState in history) {
+            if (state.HadEvent()) return true;
+        }
+        return false;
     }
 
     public function GetTotalEventCount():int
@@ -24,48 +46,6 @@ public class Individual
         }
 
         return events;
-    }
-
-    public function GetHistory():Vector.<IndividualState>
-    {
-        return history;
-    }
-
-    public function GetHistoryToEvent(number:Number):Vector.<IndividualState>
-    {
-        return history.slice(0, getIndexOfEvent(number));
-    }
-
-    private function getIndexOfEvent(number:Number):Number
-    {
-        var counter:int = 0;
-        for each (var state:IndividualState in history) {
-            if (state.HadEvent()) {
-                counter++;
-            }
-            if (counter == number) {
-                return history.indexOf(state);
-            }
-        }
-        return 0;
-    }
-
-    public function HadEvent():Boolean
-    {
-        return currentState.HadEvent();
-    }
-
-    public function HasEverHadAnEvent():Boolean
-    {
-        for each (var state:IndividualState in history) {
-            if (state.HadEvent()) return true;
-        }
-        return false;
-    }
-
-    public function GetColor():Number
-    {
-        return currentState.GetColor();
     }
 
     public function DailyUpdate():void
@@ -86,7 +66,6 @@ public class Individual
 		} else {
 			this.currentState = this.currentState.DuplicateStateWithoutEvent();
 		}
-		
     }
 
     private function getHazardRate():Number

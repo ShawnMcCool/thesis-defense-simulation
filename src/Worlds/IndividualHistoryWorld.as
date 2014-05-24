@@ -21,19 +21,17 @@ public class IndividualHistoryWorld extends World
     {
         super();
         this.simulation = simulation;
-
         add(actualArray);
     }
-
 
     override public function begin():void
     {
         super.begin();
         actualArray.clear();
-        displayMeeple();
+        displayNextMeeple();
     }
 
-    public function displayMeeple():void
+    public function displayNextMeeple():void
     {
         var individual:Individual = selectIndividual();
 
@@ -60,6 +58,7 @@ public class IndividualHistoryWorld extends World
                 }
             }
         }
+
         meepleIndex = 1;
         return null;
     }
@@ -75,10 +74,9 @@ public class IndividualHistoryWorld extends World
         if (Input.pressed(Key.LEFT)) {
             WorldManager.switchTo("simulation");
         }
-
         if (Input.pressed(Key.DOWN)) {
             actualArray.clear();
-            displayMeeple();
+            displayNextMeeple();
         }
     }
 

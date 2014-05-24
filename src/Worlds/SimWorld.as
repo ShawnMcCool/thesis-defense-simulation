@@ -1,9 +1,5 @@
 package Worlds
 {
-import Simulation.Individual;
-
-import Sprites.Meeple;
-
 import Utils.Sector;
 import Utils.TextEntity;
 
@@ -15,48 +11,46 @@ import net.flashpunk.utils.Key;
 import net.flashpunk.utils.Input;
 
 import Simulation.Simulation;
+import Simulation.Individual;
+import Sprites.Meeple;
 
 public class SimWorld extends World
 {
-    private var simulation:Simulation;
-    private var meeples:Vector.<Meeple> = new Vector.<Meeple>();
+    private const STATE_INITIAL:int = 0;
+    private const STATE_RUNNING:int = 1;
+    private const STATE_JAIL_ANALYSIS:int = 2;
 
+    private var state:int = 0;
     private var paused:Boolean = true;
+
     private var dayCountLabel:TextEntity;
     private var meeplesWithEventsCountLabel:TextEntity;
     private var meepleEventCriteriaLabel:TextEntity;
 
-    private var state:int = 0;
+    private var simulation:Simulation;
+    private var meeples:Vector.<Meeple> = new Vector.<Meeple>();
 
     private var freedomSector:Sector;
     private var jailSector:Sector;
-
-    private const STATE_INITIAL:int = 0;
-    private const STATE_RUNNING:int = 1;
-    private const STATE_JAIL_ANALYSIS:int = 2;
 
     public function SimWorld(simulation:Simulation)
     {
         super();
         this.simulation = simulation;
-        this.meeples = meeples;
 
         initializeMeeples();
         initializeHud();
         setMeepleHomes();
-
-        freedomSector = new Sector(0, 100, FP.width, FP.height);
-        freedomSector.setExclusionRadius(380);
-        add(freedomSector);
-
-        jailSector = new Sector(0, 100, FP.width, FP.height);
-        jailSector.setInclusionRadius(250);
-        add(jailSector);
+        initializeSectors();
     }
 
-    private function getPointFor(row:int, col:int):Point
+    private function initializeMeeples():void
     {
-        return new Point(78 * row + 39, 80 * col + 168);
+        for each (var individual:Individual in simulation.GetIndividuals()) {
+            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
+            meeples.push(meeple);
+            add(meeple);
+        }
     }
 
     private function initializeHud():void
@@ -89,22 +83,13 @@ public class SimWorld extends World
         add (meeplesWithEventsCountLabel);
     }
 
-    private function initializeMeeples():void
-    {
-        for each (var individual:Individual in simulation.GetIndividuals()) {
-            var meeple:Meeple = new Meeple(individual, FP.rand(FP.width), FP.rand(FP.height));
-            meeples.push(meeple);
-            add(meeple);
-        }
-    }
-
     private function setMeepleHomes():void
     {
         var row:int = 0;
         var col:int = 0;
 
         for each (var meeple:Meeple in meeples) {
-            meeple.SetHomePoint(getPointFor(row, col));
+            meeple.SetHomePoint(getRowColPoint(row, col));
 
             row++;
             if (row > 12) {
@@ -112,6 +97,17 @@ public class SimWorld extends World
                 row = 0;
             }
         }
+    }
+
+    private function initializeSectors():void
+    {
+        freedomSector = new Sector(0, 100, FP.width, FP.height);
+        freedomSector.setExclusionRadius(380);
+        add(freedomSector);
+
+        jailSector = new Sector(0, 100, FP.width, FP.height);
+        jailSector.setInclusionRadius(250);
+        add(jailSector);
     }
 
     override public function update():void
@@ -123,8 +119,12 @@ public class SimWorld extends World
         }
 
         updateLabels();
-        updateMeepleStyle();
         updateInput();
+    }
+
+    private function getRowColPoint(row:int, col:int):Point
+    {
+        return new Point(78 * row + 39, 80 * col + 168);
     }
 
     private function updateInput():void
@@ -193,18 +193,11 @@ public class SimWorld extends World
         }
     }
 
-    private function updateMeepleStyle():void
-    {
-        for each (var meeple:Meeple in meeples) {
-            meeple.UpdateStyle();
-        }
-    }
-
     private function updateLabels():void
     {
         dayCountLabel.SetText(simulation.GetDayCount().toString());
-        meepleEventCriteriaLabel.SetText(simulation.GetNumberOfIndividualsWithMoreEventsThan(2).toString());
-        meeplesWithEventsCountLabel.SetText(simulation.GetNumberOfIndividualsWithEvents().toString());
+        meepleEventCriteriaLabel.SetText(simulation.CountIndividualsWithMinimumEvents(3).toString());
+        meeplesWithEventsCountLabel.SetText(simulation.CountIndividualsWithEvents().toString());
     }
 }
 }

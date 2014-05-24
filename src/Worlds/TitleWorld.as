@@ -14,11 +14,10 @@ public class TitleWorld extends World
 
     public function TitleWorld()
     {
-        renderAuthors();
-        renderTitle();
+        renderText();
     }
 
-    private function renderAuthors():void
+    private function renderText():void
     {
         authorEntity = new TextEntity(
             "Author: Danielle McCool\nSupervisor: Maarten Cruyff",
@@ -26,23 +25,16 @@ public class TitleWorld extends World
             32,
             0, FP.halfHeight + 100
         );
-
         authorEntity.CenterText();
-
         add(authorEntity);
-    }
 
-    private function renderTitle():void
-    {
         titleEntity = new TextEntity(
             "Recurrent event model for\npopulation size estimation",
-			0x606060,			
+            0x606060,
             82,
             0, FP.halfHeight - 200
         );
-
         titleEntity.CenterText();
-
         add(titleEntity);
     }
 

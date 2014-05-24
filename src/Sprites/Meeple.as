@@ -1,7 +1,6 @@
 package Sprites
 {
 import flash.geom.Point;
-import net.flashpunk.Mask;
 import Simulation.Individual;
 
 public class Meeple extends MeepleSprite
@@ -36,14 +35,6 @@ public class Meeple extends MeepleSprite
         return individual.HasEverHadAnEvent();
     }
 
-    public function UpdateStyle():void
-    {
-        setColor(individual.GetColor());
-        if (HadEvent()) {
-            sprMeeple.scale = eventScaleSize;
-        }
-    }
-
     public function SetHomePoint(homePoint:Point):void
     {
         this.homePoint = homePoint;
@@ -63,13 +54,25 @@ public class Meeple extends MeepleSprite
     override public function update():void
     {
         super.update();
+        updateStyles();
+        updateTargeting();
+    }
 
+    private function updateTargeting():void
+    {
         if (target == "home") {
             moveTowards(homePoint.x, homePoint.y, speed);
         } else if (target == "target") {
             moveTowards(targetPoint.x, targetPoint.y, speed);
         }
+    }
 
+    private function updateStyles():void
+    {
+        setColor(individual.GetColor());
+        if (HadEvent()) {
+            sprMeeple.scale = eventScaleSize;
+        }
         if (sprMeeple.scale > 1) {
             sprMeeple.scale -= .5;
         }

@@ -3,15 +3,10 @@
  */
 package Worlds
 {
-import Sprites.Meeple;
-
 import flash.utils.Dictionary;
-
 import net.flashpunk.FP;
 import net.flashpunk.World;
-
 import Simulation.Simulation;
-import Simulation.Individual;
 
 public class WorldManager
 {
@@ -28,19 +23,14 @@ public class WorldManager
         add("history", new IndividualHistoryWorld(simulation));
     }
 
-    public static function add(name:String, world:World):void
-    {
-        worlds[name] = world;
-    }
-
-    public static function get(name:String):World
-    {
-        return worlds[name];
-    }
-
     public static function switchTo(name:String):void
     {
         FP.world = worlds[name];
+    }
+
+    private static function add(name:String, world:World):void
+    {
+        worlds[name] = world;
     }
 }
 }

@@ -24,19 +24,14 @@ package Simulation
 		
 		public static function GenerateNewState(eventCount:int):IndividualState
 		{
-			var state:int = FP.choose(0, 1, 2);
-
-			switch(state)
+			switch(FP.choose(0, 1, 2))
 			{
 				case 0:
 					return new IndividualState(0, 0x52a5e5, eventCount);
 				case 1:
-					return new IndividualState(.005, 0xffe250, eventCount);
-				case 2:
-					return new IndividualState(.04, 0xfe5054, eventCount);
+					return new IndividualState(.0025, 0xffe250, eventCount);
 			}
-			
-			throw new Error("Covariate randomization error.");
+            return new IndividualState(.005, 0xfe5054, eventCount);
 		}
 		
 		
