@@ -1,6 +1,7 @@
 package Sprites
 {
 import net.flashpunk.Entity;
+import net.flashpunk.FP;
 
 public class MeepleArray extends Entity
 {
@@ -13,7 +14,8 @@ public class MeepleArray extends Entity
 
     public function addMeeple(color:Number):void
     {
-        var meeple:MeepleSprite = new MeepleSprite(0, 0);
+        var meeple:MeepleSprite = new MeepleSprite(20, 20);
+        meeple.setColor(color);
         meeples.push(meeple);
         world.add(meeple);
         orderMeeples();
@@ -21,7 +23,7 @@ public class MeepleArray extends Entity
 
     private function orderMeeples():void
     {
-        var widthPer:int = 60;
+        var widthPer:int = getWidthPer();
         var i:int = 0;
 
         for each (var meeple:MeepleSprite in meeples) {
@@ -29,6 +31,13 @@ public class MeepleArray extends Entity
             meeple.y = topMargin;
             i++;
         }
+    }
+
+    private function getWidthPer():int
+    {
+        var usableSpace:int = FP.width - leftMargin*2;
+
+        return usableSpace / meeples.length;
     }
 
     override public function removed():void
