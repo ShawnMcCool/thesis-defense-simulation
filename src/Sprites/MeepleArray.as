@@ -47,8 +47,7 @@ public class MeepleArray extends Entity
 
     private function getWidthPer():int
     {
-        var usableSpace:int = FP.width ;
-FP.log(usableSpace / meeples.length);
+        var usableSpace:int = FP.width - (horizontalMargin*2);
         return usableSpace / meeples.length;
     }
 }

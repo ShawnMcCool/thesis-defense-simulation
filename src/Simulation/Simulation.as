@@ -43,6 +43,17 @@ public class Simulation
         return dayCount;
     }
 
+    public function GetNumberOfIndividualsWithEvents():Number
+    {
+        var counter:int = 0;
+        for each (var individual:Individual in individuals) {
+            if (individual.HasEverHadAnEvent()) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
     public function GetNumberOfIndividualsWithMoreEventsThan(number:Number):Number
     {
         var counter:int = 0;

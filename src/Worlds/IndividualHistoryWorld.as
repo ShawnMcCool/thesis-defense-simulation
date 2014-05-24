@@ -41,7 +41,7 @@ public class IndividualHistoryWorld extends World
             return;
         }
 
-        for each (var state:IndividualState in individual.GetHistoryToEvent(3)) {
+        for each (var state:IndividualState in individual.GetHistory()) {
             actualArray.addMeeple(state.GetColor());
         }
     }
