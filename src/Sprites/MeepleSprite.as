@@ -9,9 +9,10 @@ public class MeepleSprite extends Entity
     protected var MEEPLE:Class;
     public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
 
-    public function MeepleSprite(x:Number = 0, y:Number = 0)
+    public function MeepleSprite(x:Number = 0, y:Number = 0, scale:Number = 1)
     {
         super(x, y, sprMeeple);
+        sprMeeple.scale = scale;
         setHitbox(0, 0, 0, 0);
         configureGraphics();
     }

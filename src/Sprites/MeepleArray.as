@@ -14,11 +14,20 @@ public class MeepleArray extends Entity
 
     public function addMeeple(color:Number):void
     {
-        var meeple:MeepleSprite = new MeepleSprite(20, 20);
+        var meeple:MeepleSprite = new MeepleSprite(20, 20, .25);
         meeple.setColor(color);
         meeples.push(meeple);
         world.add(meeple);
         orderMeeples();
+    }
+
+    public function clear():void
+    {
+        var meeple:MeepleSprite;
+        while (meeple = meeples.pop()) {
+            world.remove(meeple);
+        }
+        FP.log(meeples.length);
     }
 
     private function orderMeeples():void
@@ -35,22 +44,9 @@ public class MeepleArray extends Entity
 
     private function getWidthPer():int
     {
-        var usableSpace:int = FP.width - leftMargin*2;
+        var usableSpace:int = FP.width;
 
         return usableSpace / meeples.length;
-    }
-
-    override public function removed():void
-    {
-        for each (var meeple:MeepleSprite in meeples) {
-            world.remove(meeple);
-        }
-        super.removed();
-    }
-
-    override public function added():void
-    {
-        super.added();
     }
 }
 }

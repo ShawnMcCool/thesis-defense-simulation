@@ -31,13 +31,8 @@ public class IndividualHistoryWorld extends World
     override public function begin():void
     {
         super.begin();
+        actualArray.clear();
         displayMeeple();
-    }
-
-    override public function end():void
-    {
-        super.end();
-        FP.log("changed away");
     }
 
     public function displayMeeple():void
@@ -48,20 +43,21 @@ public class IndividualHistoryWorld extends World
             return;
         }
 
-        for each (var state:IndividualState in individual.GetHistory()) {
+        for each (var state:IndividualState in individual.GetHistoryToEvent(3)) {
             actualArray.addMeeple(state.GetColor());
         }
     }
 
     public function selectIndividual():Individual
     {
+        var counter:int = 0;
         for each (var individual:Individual in simulation.GetIndividuals()) {
-            if (meetsSelectionCriteria(individual)) {
+            if (meetsSelectionCriteria(individual) && counter >= meepleIndex) {
                 meepleIndex++;
                 return individual;
             }
+            counter++;
         }
-        FP.log("No valid individuals found.");
         return null;
     }
 

@@ -29,6 +29,25 @@ public class Individual
         return history;
     }
 
+    public function GetHistoryToEvent(number:Number):Vector.<IndividualState>
+    {
+        return history.slice(0, getIndexOfEvent(number));
+    }
+
+    private function getIndexOfEvent(number:Number):Number
+    {
+        var counter:int = 0;
+        for each (var state:IndividualState in history) {
+            if (state.HadEvent()) {
+                counter++;
+            }
+            if (counter == number) {
+                return history.indexOf(state);
+            }
+        }
+        return null;
+    }
+
     public function HadEvent():Boolean
     {
         return currentState.HadEvent();
