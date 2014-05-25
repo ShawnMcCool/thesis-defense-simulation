@@ -160,7 +160,9 @@ public class SimulationWorld extends World
                 ChangeState(STATE_RUNNING);
             }
             if (Input.pressed(Key.RIGHT)) {
-                WorldManager.switchTo("history");
+                if (simulation.CountIndividualsWithMinimumEvents(3)) {
+                    WorldManager.switchTo("history");
+                }
             }
         }
     }
