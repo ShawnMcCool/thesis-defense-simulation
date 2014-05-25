@@ -15,7 +15,7 @@ public class SummaryMeeple extends Meeple
 
     public function hadEvent():Boolean
     {
-        return individual.HadEvent();
+        return individual.hadEvent();
     }
 
     public function isColorUnknown():Boolean
@@ -25,7 +25,7 @@ public class SummaryMeeple extends Meeple
 
     public function setColorToCovariate():void
     {
-        setColor(individual.GetColor());
+        setColor(individual.getColor());
     }
 
     public function SetColorToUnknown():void
@@ -36,6 +36,17 @@ public class SummaryMeeple extends Meeple
     public function getIndividual():Individual
     {
         return individual;
+    }
+
+    public function colorPoisson():void
+    {
+        var color:Number = individual.getFirstEventColor();
+
+        if (color == 0) {
+            color = unknownColor;
+        }
+
+        setColor(color);
     }
 }
 }

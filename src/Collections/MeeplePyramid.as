@@ -1,7 +1,6 @@
 package Collections
 {
 import Entities.SummaryMeeple;
-
 import Simulation.Individual;
 
 import net.flashpunk.FP;
@@ -10,9 +9,9 @@ public class MeeplePyramid extends MeepleArray
 {
     private var individuals:Vector.<Individual>;
 
-    public function MeeplePyramid(individuals:Vector.<Individual>, horizontalMargin:int, verticalMargin:int)
+    public function MeeplePyramid(individuals:Vector.<Individual>)
     {
-        super(horizontalMargin, verticalMargin);
+        super(0,0);
         this.individuals = individuals;
     }
 
@@ -21,6 +20,14 @@ public class MeeplePyramid extends MeepleArray
         super.added();
         buildMeeples();
         arrangeMeeples();
+        colorMeeples();
+    }
+
+    private function colorMeeples():void
+    {
+        for each (var meeple:SummaryMeeple in meeples) {
+            meeple.colorPoisson();
+        }
     }
 
     private function arrangeMeeples():void
@@ -29,14 +36,18 @@ public class MeeplePyramid extends MeepleArray
 
         var totalRows:int = 13;
         var perRow:int = 14;
-        var rowHeight:int = 60;
-        var meepleXOffset:int = 30;
+        var rowHeight:int = 50;
+        var meepleXOffset:int = 70;
 
         var rowCounter:int = 0;
         var currentRow:int = totalRows;
+        var centeringMargin:int = FP.halfWidth;
+
+        verticalMargin = 25;
 
         for each (var meeple:SummaryMeeple in meeples) {
-            meeple.x = horizontalMargin + meepleXOffset*rowCounter;
+
+            meeple.x = centeringMargin - ((perRow-1) * meepleXOffset / 2) + (meepleXOffset * rowCounter);
             meeple.y = verticalMargin + rowHeight*currentRow;
 
             // update row counter
@@ -51,8 +62,8 @@ public class MeeplePyramid extends MeepleArray
 
     private function orderByEventCount(a:SummaryMeeple, b:SummaryMeeple):int
     {
-        var aCount:int = a.getIndividual().GetTotalEventCount();
-        var bCount:int = b.getIndividual().GetTotalEventCount();
+        var aCount:int = a.getIndividual().getTotalEventCount();
+        var bCount:int = b.getIndividual().getTotalEventCount();
 
         if (aCount < bCount) {
             return -1;

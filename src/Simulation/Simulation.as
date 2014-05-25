@@ -45,7 +45,7 @@ public class Simulation
     {
         dayCount++;
         for each(var individual:Individual in individuals) {
-            individual.DailyUpdate();
+            individual.dailyUpdate();
         }
     }
 
@@ -63,7 +63,7 @@ public class Simulation
     {
         var counter:int = 0;
         for each (var individual:Individual in individuals) {
-            if (individual.GetTotalEventCount() >= number) {
+            if (individual.getTotalEventCount() >= number) {
                 counter++;
             }
         }

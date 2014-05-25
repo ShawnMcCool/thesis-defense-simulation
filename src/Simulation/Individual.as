@@ -12,22 +12,32 @@ public class Individual
         currentState = IndividualState.GenerateNewState(0);
     }
 
-    public function GetHistory():Vector.<IndividualState>
+    public function getFirstEventColor():Number
+    {
+        for each (var state:IndividualState in history) {
+            if (state.HadEvent()) {
+                return state.GetColor();
+            }
+        }
+        return 0;
+    }
+
+    public function getHistory():Vector.<IndividualState>
     {
         return history;
     }
 
-    public function HadEvent():Boolean
+    public function hadEvent():Boolean
     {
         return currentState.HadEvent();
     }
 
-    public function GetColor():Number
+    public function getColor():Number
     {
         return currentState.GetColor();
     }
 
-    public function HasEverHadAnEvent():Boolean
+    public function hasEverHadAnEvent():Boolean
     {
         for each (var state:IndividualState in history) {
             if (state.HadEvent()) return true;
@@ -35,7 +45,7 @@ public class Individual
         return false;
     }
 
-    public function GetTotalEventCount():int
+    public function getTotalEventCount():int
     {
         var events:int = 0;
 
@@ -48,7 +58,7 @@ public class Individual
         return events;
     }
 
-    public function DailyUpdate():void
+    public function dailyUpdate():void
     {
         assignNewState();
         if (hasEvent()) {

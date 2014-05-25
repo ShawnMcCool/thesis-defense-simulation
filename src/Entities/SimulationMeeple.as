@@ -21,17 +21,17 @@ public class SimulationMeeple extends Meeple
 
     public function HadEvent():Boolean
     {
-        return individual.HadEvent();
+        return individual.hadEvent();
     }
 
     public function GetTotalEventCount():int
     {
-        return individual.GetTotalEventCount();
+        return individual.getTotalEventCount();
     }
 
     public function HasEverHadAnEvent():Boolean
     {
-        return individual.HasEverHadAnEvent();
+        return individual.hasEverHadAnEvent();
     }
 
     public function SetHomePoint(homePoint:Point):void
@@ -68,7 +68,7 @@ public class SimulationMeeple extends Meeple
 
     private function updateStyles():void
     {
-        setColor(individual.GetColor());
+        setColor(individual.getColor());
         if (HadEvent()) {
             sprMeeple.scale = eventScaleSize;
 			setTint(GetTotalEventCount());

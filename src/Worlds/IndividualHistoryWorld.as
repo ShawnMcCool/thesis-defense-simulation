@@ -145,7 +145,7 @@ public class IndividualHistoryWorld extends World
 
     private function meetsSelectionCriteria(individual:Individual):Boolean
     {
-        return individual.GetTotalEventCount() >= 3;
+        return individual.getTotalEventCount() >= 3;
     }
 }
 }

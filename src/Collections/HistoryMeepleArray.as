@@ -26,7 +26,7 @@ public class HistoryMeepleArray extends MeepleArray
 
     protected function buildMeeplesFromHistory():void
     {
-        for each (var state:IndividualState in individual.GetHistory()) {
+        for each (var state:IndividualState in individual.getHistory()) {
             addMeeple(new HistoryMeeple(state));
         }
         colorMeeples();
