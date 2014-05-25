@@ -51,6 +51,13 @@ public class SimWorld extends World
             meeples.push(meeple);
             add(meeple);
         }
+
+        meeples.sort(shuffleVector);
+    }
+
+    private function shuffleVector( a:Object, b:Object ):int
+    {
+        return Math.floor( Math.random() * 3 - 1 );
     }
 
     private function initializeHud():void

@@ -1,21 +1,21 @@
 package Entities
 {
-import Simulation.IndividualState;
+import Simulation.Individual;
 
 public class SummaryMeeple extends Meeple
 {
-    private var state:IndividualState;
+    private var individual:Individual;
     protected var unknownColor:Number = 0xC1C1C1;
 
-    public function SummaryMeeple(state:IndividualState)
+    public function SummaryMeeple(individual:Individual)
     {
         super(0, 0);
-        this.state = state;
+        this.individual = individual;
     }
 
     public function hadEvent():Boolean
     {
-        return state.HadEvent();
+        return individual.HadEvent();
     }
 
     public function isColorUnknown():Boolean
@@ -25,7 +25,7 @@ public class SummaryMeeple extends Meeple
 
     public function setColorToCovariate():void
     {
-        setColor(state.GetColor());
+        setColor(individual.GetColor());
     }
 
     public function SetColorToUnknown():void
@@ -33,9 +33,9 @@ public class SummaryMeeple extends Meeple
         setColor(unknownColor);
     }
 
-    public function getState():IndividualState
+    public function getIndividual():Individual
     {
-        return state;
+        return individual;
     }
 }
 }
