@@ -130,6 +130,9 @@ public class IndividualHistoryWorld extends World
         if (Input.pressed(Key.LEFT)) {
             WorldManager.switchTo("simulation");
         }
+        if (Input.pressed(Key.RIGHT)) {
+            WorldManager.switchTo("summary");
+        }
         if (Input.pressed(Key.DOWN)) {
             remove(actualArray);
             remove(recordedArray);

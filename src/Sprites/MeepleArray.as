@@ -59,5 +59,13 @@ public class MeepleArray extends Entity
         var usableSpace:int = FP.width - (horizontalMargin*2);
         return usableSpace / meeples.length;
     }
+
+    override public function removed():void
+    {
+        super.removed();
+        for each (var meeple:Meeple in meeples) {
+            world.remove(meeple);
+        }
+    }
 }
 }

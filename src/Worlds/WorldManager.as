@@ -21,6 +21,7 @@ public class WorldManager
         add("title", new TitleWorld());
         add("simulation", new SimWorld(simulation));
         add("history", new IndividualHistoryWorld(simulation));
+        add("summary", new SummaryWorld(simulation));
     }
 
     public static function switchTo(name:String):void

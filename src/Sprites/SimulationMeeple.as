@@ -5,7 +5,6 @@ import Simulation.Individual;
 
 public class SimulationMeeple extends Meeple
 {
-    private const speed:Number = 16;
     private const eventScaleSize:Number = 2;
 
     private var individual:Individual;
@@ -15,14 +14,9 @@ public class SimulationMeeple extends Meeple
 
     public function SimulationMeeple(individual:Individual, x:Number = 0, y:Number = 0)
     {
-        super(x, y, .2);
+        super(x, y);
         homePoint = new Point(x, y);
         this.individual = individual;
-    }
-
-    public function getIndividual():Individual
-    {
-        return individual;
     }
 
     public function HadEvent():Boolean

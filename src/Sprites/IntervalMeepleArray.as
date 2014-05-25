@@ -30,7 +30,7 @@ public class IntervalMeepleArray extends HistoryMeepleArray
         }
 
         counter = 0;
-        for each (var meeple:HistoryMeeple in meeples) {
+        for each (meeple in meeples) {
             if (meeple.isColorUnknown()) {
                 if (getNextEventIndex(events, counter)) {
                     meeple.setColor(events[getNextEventIndex(events, counter)].GetColor());
@@ -60,7 +60,7 @@ public class IntervalMeepleArray extends HistoryMeepleArray
             }
         }
 
-        return null;
+        return 0;
     }
 
     private function getPreviousEventIndex(events:Dictionary, counter:int):Number
@@ -81,7 +81,7 @@ public class IntervalMeepleArray extends HistoryMeepleArray
             }
         }
 
-        return null;
+        return 0;
     }
 }
 }

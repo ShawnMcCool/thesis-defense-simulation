@@ -24,9 +24,7 @@ public class ProportionalMeepleArray extends HistoryMeepleArray
             }
         }
 
-        FP.log(colors.join(", "));
-        
-        for each (var meeple:HistoryMeeple in meeples) {
+        for each (meeple in meeples) {
             if (meeple.isColorUnknown()) {
                 meeple.setColor(FP.choose(colors));
             }
