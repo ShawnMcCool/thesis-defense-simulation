@@ -6,7 +6,7 @@ public class Individual
     private var currentState:IndividualState;
     private var history:Vector.<IndividualState> = new Vector.<IndividualState>();
 
-    public function Individual(baseHazardRate:Number = .002)
+    public function Individual(baseHazardRate:Number = .0046666)
     {
         this.baseHazardRate = baseHazardRate;
         currentState = IndividualState.GenerateNewState(0);
