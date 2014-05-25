@@ -29,14 +29,14 @@ package Simulation
 				case 0:
 					return new IndividualState(-.002, 0x52a5e5, eventCount);
 				case 1:
-					return new IndividualState(0, 0xffe250, eventCount);
+					return new IndividualState(0, 0xECDE56, eventCount);
 			}
-            return new IndividualState(.004, 0xfe5054, eventCount);
+            return new IndividualState(.004, 0xf74d81, eventCount);
 		}
 		
 		
 		public function DuplicateStateWithoutEvent():IndividualState
-		{
+		{3
 			return new IndividualState(GetBeta(), GetColor(), GetEventCount());
 		}
 		
