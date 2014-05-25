@@ -52,6 +52,7 @@ public class MeepleArray extends Entity
         for each (var meeple:Meeple in meeples) {
             meeple.x = leftOffset + horizontalMargin + widthPer*i;
             meeple.y = verticalMargin;
+            meeple.layer = i * -1;
             i++;
         }
     }
