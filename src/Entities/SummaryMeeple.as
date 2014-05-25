@@ -47,6 +47,7 @@ public class SummaryMeeple extends Meeple
         }
 
         setColor(color);
+        setTint(individual.getTotalEventCount());
     }
 }
 }
