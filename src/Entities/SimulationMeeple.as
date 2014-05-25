@@ -71,6 +71,7 @@ public class SimulationMeeple extends Meeple
         setColor(individual.GetColor());
         if (HadEvent()) {
             sprMeeple.scale = eventScaleSize;
+			setTint(GetTotalEventCount());
         }
         if (sprMeeple.scale > 1) {
             sprMeeple.scale -= .5;

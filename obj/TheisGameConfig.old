@@ -8,15 +8,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>true</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>false</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>true</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'24-May-14'</value>
+      <value>'25-May-14'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -30,6 +30,8 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
+    <optimize>true</optimize>
+    <omit-trace-statements>false</omit-trace-statements>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
       <path-element>C:\Users\Danielle\Dropbox\Thesis Defense\Theis Game\src</path-element>
