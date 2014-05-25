@@ -1,7 +1,7 @@
-package Sprites
+package Collections
 {
+import Entities.*;
 import Simulation.Individual;
-
 import net.flashpunk.FP;
 
 public class ProportionalMeepleArray extends HistoryMeepleArray

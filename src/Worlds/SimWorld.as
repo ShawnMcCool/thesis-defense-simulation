@@ -12,7 +12,7 @@ import net.flashpunk.utils.Input;
 
 import Simulation.Simulation;
 import Simulation.Individual;
-import Sprites.SimulationMeeple;
+import Entities.SimulationMeeple;
 
 public class SimWorld extends World
 {

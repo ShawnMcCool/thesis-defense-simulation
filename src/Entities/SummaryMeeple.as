@@ -1,13 +1,13 @@
-package Sprites
+package Entities
 {
 import Simulation.IndividualState;
 
-public class HistoryMeeple extends Meeple
+public class SummaryMeeple extends Meeple
 {
     private var state:IndividualState;
     protected var unknownColor:Number = 0xC1C1C1;
 
-    public function HistoryMeeple(state:IndividualState)
+    public function SummaryMeeple(state:IndividualState)
     {
         super(0, 0);
         this.state = state;

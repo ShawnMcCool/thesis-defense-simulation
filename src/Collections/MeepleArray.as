@@ -1,5 +1,7 @@
-package Sprites
+package Collections
 {
+import Entities.*;
+
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 

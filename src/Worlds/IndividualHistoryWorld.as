@@ -3,12 +3,12 @@ package Worlds
 import Simulation.Individual;
 import Simulation.Simulation;
 
-import Sprites.ActualMeepleArray;
+import Collections.ActualMeepleArray;
 
-import Sprites.IntervalMeepleArray;
-import Sprites.PoissonMeepleArray;
-import Sprites.ProportionalMeepleArray;
-import Sprites.RecordedMeepleArray;
+import Collections.IntervalMeepleArray;
+import Collections.PoissonMeepleArray;
+import Collections.ProportionalMeepleArray;
+import Collections.RecordedMeepleArray;
 
 import Utils.TextEntity;
 

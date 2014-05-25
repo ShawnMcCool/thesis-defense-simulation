@@ -1,4 +1,4 @@
-package Sprites
+package Entities
 {
 import flash.geom.Point;
 

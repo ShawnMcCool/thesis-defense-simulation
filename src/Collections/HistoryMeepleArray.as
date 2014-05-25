@@ -1,5 +1,7 @@
-package Sprites
+package Collections
 {
+import Entities.*;
+
 import Simulation.Individual;
 import Simulation.IndividualState;
 
