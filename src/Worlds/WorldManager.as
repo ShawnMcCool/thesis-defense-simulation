@@ -19,7 +19,7 @@ public class WorldManager
         var simulation:Simulation = new Simulation();
 
         add("title", new TitleWorld());
-        add("simulation", new SimWorld(simulation));
+        add("simulation", new SimulationWorld(simulation));
         add("history", new IndividualHistoryWorld(simulation));
         add("summary", new SummaryWorld(simulation));
     }

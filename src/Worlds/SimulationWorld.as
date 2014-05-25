@@ -14,7 +14,7 @@ import Simulation.Simulation;
 import Simulation.Individual;
 import Entities.SimulationMeeple;
 
-public class SimWorld extends World
+public class SimulationWorld extends World
 {
     private const STATE_INITIAL:int = 0;
     private const STATE_RUNNING:int = 1;
@@ -33,7 +33,7 @@ public class SimWorld extends World
     private var freedomSector:Sector;
     private var jailSector:Sector;
 
-    public function SimWorld(simulation:Simulation)
+    public function SimulationWorld(simulation:Simulation)
     {
         super();
         this.simulation = simulation;
