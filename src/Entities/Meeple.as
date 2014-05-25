@@ -24,11 +24,21 @@ public class Meeple extends Entity
     {
         sprMeeple.color = color;
     }
+	
+	public function setTint(tint:Number):void
+	{
+		sprMeeple.tinting = tint;
+	}
 
     public function getColor():Number
     {
         return sprMeeple.color;
     }
+	
+	public function getTint():Number
+	{
+		return sprMeeple.tinting;
+	}
 
     private function configureGraphics():void
     {
