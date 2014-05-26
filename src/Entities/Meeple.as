@@ -47,7 +47,7 @@ public class Meeple extends Entity
 	
 	public function setTint(events:int):void
 	{
-		sprMeeple.tinting = .25*events + .75;
+		sprMeeple.tinting = .50*events + .50;
 	}
 
     public function getColor():Number
@@ -67,8 +67,8 @@ public class Meeple extends Entity
         sprMeeple.add("walk", [0,1,2,3,4,5,6,7,8], .5, true);
         sprMeeple.play("stand");
         sprMeeple.centerOrigin();
-		sprMeeple.tintMode = 1;
-		sprMeeple.tinting = .75;
+		sprMeeple.tintMode = 0;
+		sprMeeple.tinting = .5;
         centerOrigin();
     }
 
