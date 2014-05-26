@@ -76,6 +76,7 @@ public class SummaryWorld extends World
                 break;
             case STATE_SHOW_ALL:
                 pyramid.showAllMeeples();
+                pyramid.colorAllMeeplesUnknown();
                 break;
             case STATE_COLOR_CAPTURED:
                 pyramid.colorMeeplesPoisson();
