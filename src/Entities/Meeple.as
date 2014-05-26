@@ -7,7 +7,7 @@ import net.flashpunk.graphics.Spritemap;
 
 public class Meeple extends Entity
 {
-    [Embed(source="../../assets/scaled_meeple_spritesheet.png")]
+    [Embed(source="../../assets/test_meeple_spritesheet.png")]
     protected var MEEPLE:Class;
 
     [Embed(source="../../assets/event_meeple.png")]
@@ -64,7 +64,7 @@ public class Meeple extends Entity
     {
         graphic = sprMeeple;
         sprMeeple.add("stand", [0], 1, true);
-        sprMeeple.add("walk", [0], 1, true);
+        sprMeeple.add("walk", [0,1,2,3,4,5,6,7,8], .5, true);
         sprMeeple.play("stand");
         sprMeeple.centerOrigin();
 		sprMeeple.tintMode = 1;
