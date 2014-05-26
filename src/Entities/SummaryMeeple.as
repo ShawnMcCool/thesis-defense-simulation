@@ -46,7 +46,6 @@ public class SummaryMeeple extends Meeple
 
     public function setColorToUnknown():void
     {
-        FP.log("UNKNOWN");
         setColor(unknownColor);
     }
 

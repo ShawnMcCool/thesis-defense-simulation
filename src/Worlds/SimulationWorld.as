@@ -1,7 +1,5 @@
 package Worlds
 {
-import Entities.SimulationMeeple;
-
 import Utils.Sector;
 import Utils.TextEntity;
 
@@ -18,10 +16,12 @@ import Entities.SimulationMeeple;
 
 public class SimulationWorld extends World
 {
-    private const STATE_INITIAL:int = 0;
-    private const STATE_PAUSED:int = 3;
-    private const STATE_RUNNING:int = 1;
-    private const STATE_JAIL_ANALYSIS:int = 2;
+    private const STATE_PAUSED_UNKNOWN:int = 0;
+    private const STATE_RUNNING_UNKNOWN:int = 1;
+    private const STATE_ANALYSIS_UNKNOWN:int = 2;
+    private const STATE_PAUSED_COVARIATES:int = 3;
+    private const STATE_RUNNING_COVARIATES:int = 4;
+    private const STATE_ANALYSIS_COVARIATES:int = 5;
 
     private var state:int = 0;
     private var paused:Boolean = true;
@@ -41,11 +41,11 @@ public class SimulationWorld extends World
         super();
         this.simulation = simulation;
 
-        changeState(STATE_INITIAL);
         initializeMeeples();
         initializeHud();
         setMeepleHomes();
         initializeSectors();
+        changeState(STATE_PAUSED_UNKNOWN);
     }
 
     private function initializeMeeples():void
@@ -54,7 +54,6 @@ public class SimulationWorld extends World
             var meeple:SimulationMeeple = new SimulationMeeple(individual, FP.rand(FP.width), FP.rand(FP.height));
             meeples.push(meeple);
             add(meeple);
-            meeple.setColorUnknown();
         }
 
         meeples.sort(shuffleVector);
@@ -126,9 +125,8 @@ public class SimulationWorld extends World
     {
         super.update();
 
-        if (state == STATE_RUNNING) {
+        if ( ! paused) {
             simulation.Update();
-            colorMeeples();
         }
 
         updateLabels();
@@ -142,46 +140,50 @@ public class SimulationWorld extends World
 
     private function updateInput():void
     {
-        if (state == STATE_INITIAL) {
+        if (state == STATE_PAUSED_UNKNOWN) {
             if (Input.pressed(Key.LEFT)) {
                 WorldManager.switchTo("title");
             }
             if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_PAUSED);
-                colorMeeples();
+                changeState(STATE_RUNNING_UNKNOWN);
             }
-        } else if (state == STATE_PAUSED) {
-            if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_RUNNING);
-            }
-        } else if (state == STATE_RUNNING) {
+        } else if (state == STATE_RUNNING_UNKNOWN) {
             if (Input.pressed(Key.LEFT)) {
-                changeState(STATE_INITIAL);
+                changeState(STATE_PAUSED_UNKNOWN);
             }
             if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_JAIL_ANALYSIS);
+                changeState(STATE_ANALYSIS_UNKNOWN);
             }
-            if (Input.pressed(Key.DOWN)) {
-                for (var i:int = simulation.GetDayCount(); i<30; i++) {
-                    simulation.nextDay();
-                }
-            }
-        } else if (state == STATE_JAIL_ANALYSIS) {
+        } else if (state == STATE_ANALYSIS_UNKNOWN) {
             if (Input.pressed(Key.LEFT)) {
-                changeState(STATE_RUNNING);
+                changeState(STATE_RUNNING_UNKNOWN);
+            }
+            if (Input.pressed(Key.RIGHT)) {
+                changeState(STATE_PAUSED_COVARIATES);
+            }
+        } else if (state == STATE_PAUSED_COVARIATES) {
+            if (Input.pressed(Key.LEFT)) {
+                changeState(STATE_ANALYSIS_UNKNOWN);
+            }
+            if (Input.pressed(Key.RIGHT)) {
+                changeState(STATE_RUNNING_COVARIATES);
+            }
+        } else if (state == STATE_RUNNING_COVARIATES) {
+            if (Input.pressed(Key.LEFT)) {
+                changeState(STATE_PAUSED_COVARIATES);
+            }
+            if (Input.pressed(Key.RIGHT)) {
+                changeState(STATE_ANALYSIS_COVARIATES);
+            }
+        } else if (state == STATE_ANALYSIS_COVARIATES) {
+            if (Input.pressed(Key.LEFT)) {
+                changeState(STATE_RUNNING_COVARIATES);
             }
             if (Input.pressed(Key.RIGHT)) {
                 if (simulation.CountIndividualsWithMinimumEvents(3)) {
                     WorldManager.switchTo("history");
                 }
             }
-        }
-    }
-
-    private function markMeeplesUnknown():void
-    {
-        for each (var meeple:SimulationMeeple in meeples) {
-            meeple.setColorUnknown();
         }
     }
 
@@ -194,16 +196,38 @@ public class SimulationWorld extends World
 
     private function changeState(state:int):void
     {
-        if (state == STATE_RUNNING) {
+        if (state == STATE_PAUSED_UNKNOWN) {
+            sendMeeplesHome();
+            colorAllMeeplesUnknown();
+            paused = true;
+        } else if (state == STATE_RUNNING_UNKNOWN) {
+            sendMeeplesHome();
+            colorAllMeeplesUnknown();
+            paused = false;
+        } else if (state == STATE_ANALYSIS_UNKNOWN) {
+            sendMeeplesToJail();
+            colorAllMeeplesUnknown();
+            paused = true;
+        } else if (state == STATE_PAUSED_COVARIATES) {
+            sendMeeplesHome();
+            colorMeeples();
+            paused = true;
+        } else if (state == STATE_RUNNING_COVARIATES) {
             sendMeeplesHome();
             paused = false;
-        }
-
-        if (state == STATE_JAIL_ANALYSIS) {
+        } else if (state == STATE_ANALYSIS_COVARIATES) {
             sendMeeplesToJail();
+            paused = true;
         }
 
         this.state = state;
+    }
+
+    private function colorAllMeeplesUnknown():void
+    {
+        for each (var meeple:SimulationMeeple in meeples) {
+            meeple.setColorToUnknown();
+        }
     }
 
     private function sendMeeplesHome():void

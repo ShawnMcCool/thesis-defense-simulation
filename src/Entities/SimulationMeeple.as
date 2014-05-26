@@ -34,6 +34,11 @@ public class SimulationMeeple extends Meeple
         return individual.hasEverHadAnEvent();
     }
 
+    public function setColorToUnknown():void
+    {
+        setColor(unknownColor);
+    }
+
     public function SetHomePoint(homePoint:Point):void
     {
         this.homePoint = homePoint;
