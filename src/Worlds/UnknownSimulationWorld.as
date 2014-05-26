@@ -13,7 +13,7 @@ public class UnknownSimulationWorld extends SimulationWorld
     {
     }
 
-    private function previousWorld():void
+    protected function previousWorld():void
     {
         WorldManager.switchTo("title");
     }

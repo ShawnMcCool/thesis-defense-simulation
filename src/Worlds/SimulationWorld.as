@@ -181,7 +181,7 @@ public class SimulationWorld extends World
         }
     }
 
-    private function previousWorld():void
+    protected function previousWorld():void
     {
         WorldManager.switchTo("unknown_simulation");
     }
