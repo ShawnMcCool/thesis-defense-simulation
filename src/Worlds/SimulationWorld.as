@@ -74,12 +74,12 @@ public class SimulationWorld extends World
         add(dayCountLabel);
 
         var headings:Array = [
-            "Population",
-            "Population Being Captured",
-            "Captured Members",
-            "With Covariates",
-            "Population Being Captured",
-            "Captured Members"
+            "A hidden population",
+            "Events in a hidden population",
+            "Individuals with one or more events",
+            "Covariates",
+            "Time-varying covariates",
+            "Individuals with one or more events"
         ];
 
         for each (var title:String in headings) {
