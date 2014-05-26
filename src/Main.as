@@ -18,7 +18,7 @@ public class Main extends Engine
         super(1024, 768, 60, true);
 
         FP.screen.color = 0xFFFFFF;
-        FP.console.enable();
+//        FP.console.enable();
 
         WorldManager.init();
         WorldManager.switchTo("title");

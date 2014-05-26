@@ -6,6 +6,7 @@ import flash.events.KeyboardEvent;
 
 import net.flashpunk.World;
 import net.flashpunk.FP;
+import net.flashpunk.graphics.Text;
 import net.flashpunk.utils.Input;
 import net.flashpunk.utils.Key;
 

@@ -41,8 +41,8 @@ public class TextEntity extends Entity
     public function SetText(text:String):void
     {
         SetSize(this.size);
-        this.text = new Text(prefix + text);
-        this.text.color = this.color;
+        this.text = new Text(prefix + text, 0, 0, {'color': 0x444444});
+        this.text.color = 0x444444;
         graphic = this.text;
     }
 
