@@ -27,7 +27,7 @@ package Simulation
 			switch(FP.choose(0, 1, 2))
 			{
 				case 0:
-					return new IndividualState(-.002, 0x52a5e5, eventCount);
+					return new IndividualState(-.004, 0x52a5e5, eventCount);
 				case 1:
 					return new IndividualState(0, 0xECDE56, eventCount);
 			}

@@ -10,6 +10,7 @@ public class HistoryMeeple extends Meeple
     {
         super(0, 0);
         this.state = state;
+		sprMeeple.tinting = 1;
     }
 
     public function hadEvent():Boolean
