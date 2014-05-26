@@ -17,9 +17,15 @@ import Entities.SimulationMeeple;
 
 public class SimulationWorld extends World
 {
-    private const STATE_PAUSED_COVARIATES:int = 3;
-    private const STATE_RUNNING_COVARIATES:int = 4;
-    private const STATE_ANALYSIS_COVARIATES:int = 5;
+    private const STATE_PAUSED_COVARIATES:int = 1;
+    private const STATE_RUNNING_COVARIATES:int = 2;
+    private const STATE_ANALYSIS_COVARIATES:int = 3;
+
+    protected var headings:Array = [
+        "Covariates",
+        "Time-varying covariates",
+        "Individuals with one or more events"
+    ];
 
     private var state:int = 0;
     private var paused:Boolean = true;
@@ -71,15 +77,6 @@ public class SimulationWorld extends World
         );
         dayCountLabel.SetPrefix("Day ");
         add(dayCountLabel);
-		
-        var headings:Array = [
-            "A hidden population",
-            "Events in a hidden population",
-            "Individuals with one or more events",
-            "Covariates",
-            "Time-varying covariates",
-            "Individuals with one or more events"
-        ];
 
         for each (var title:String in headings) {
             var text:TextEntity = new TextEntity(title, 0x444444, 48, FP.halfWidth, 30);

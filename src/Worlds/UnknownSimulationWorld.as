@@ -7,6 +7,11 @@ public class UnknownSimulationWorld extends SimulationWorld
     public function UnknownSimulationWorld(simulation:Simulation)
     {
         super(simulation);
+        headings = [
+            "Covariates",
+            "Time-varying covariates",
+            "Individuals with one or more events"
+        ];
     }
 
     override protected function colorMeeples():void
