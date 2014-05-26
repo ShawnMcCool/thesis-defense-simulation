@@ -17,7 +17,7 @@ public class RecordedMeepleArray extends HistoryMeepleArray
             if (meeple.hadEvent()) {
                 meeple.setColorToCovariate();
             } else {
-                meeple.SetColorToUnknown();
+                meeple.setColorToUnknown();
             }
         }
     }

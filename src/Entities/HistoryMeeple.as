@@ -28,7 +28,7 @@ public class HistoryMeeple extends Meeple
         setColor(state.getColor());
     }
 
-    public function SetColorToUnknown():void
+    public function setColorToUnknown():void
     {
         setColor(unknownColor);
     }

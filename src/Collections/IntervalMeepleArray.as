@@ -26,7 +26,7 @@ public class IntervalMeepleArray extends HistoryMeepleArray
                 events[counter] = meeple.getState();
                 meeple.setColorToCovariate();
             } else {
-                meeple.SetColorToUnknown();
+                meeple.setColorToUnknown();
             }
             counter++;
         }
@@ -35,9 +35,9 @@ public class IntervalMeepleArray extends HistoryMeepleArray
         for each (meeple in meeples) {
             if (meeple.isColorUnknown()) {
                 if (getNextEventIndex(events, counter)) {
-                    meeple.setColor(events[getNextEventIndex(events, counter)].GetColor());
+                    meeple.setColor(events[getNextEventIndex(events, counter)].getColor());
                 } else {
-                    meeple.setColor(events[getPreviousEventIndex(events, counter)].GetColor());
+                    meeple.setColor(events[getPreviousEventIndex(events, counter)].getColor());
                 }
             }
             counter++;

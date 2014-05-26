@@ -20,7 +20,7 @@ public class ProportionalMeepleArray extends HistoryMeepleArray
                 colors.push(meeple.getState().getColor());
                 meeple.setColorToCovariate();
             } else {
-                meeple.SetColorToUnknown();
+                meeple.setColorToUnknown();
             }
         }
 
