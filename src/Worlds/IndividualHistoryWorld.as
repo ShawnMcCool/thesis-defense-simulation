@@ -131,6 +131,7 @@ public class IndividualHistoryWorld extends World
         }
 
         meepleIndex = 1;
+        WorldManager.switchTo("summary");
         return selectIndividual();
     }
 
@@ -146,16 +147,18 @@ public class IndividualHistoryWorld extends World
             WorldManager.switchTo("simulation");
         }
         if (Input.pressed(Key.PAGE_DOWN)) {
-            WorldManager.switchTo("summary");
+            advanceIndividual();
         }
-        if (Input.pressed(Key.DOWN)) {
-            remove(actualArray);
-            remove(recordedArray);
-            remove(poissonArray);
-            remove(intervalArray);
-            remove(proportionalArray);
-            initializeArrays();
-        }
+    }
+
+    private function advanceIndividual():void
+    {
+        remove(actualArray);
+        remove(recordedArray);
+        remove(poissonArray);
+        remove(intervalArray);
+        remove(proportionalArray);
+        initializeArrays();
     }
 
     private function meetsSelectionCriteria(individual:Individual):Boolean
