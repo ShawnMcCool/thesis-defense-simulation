@@ -30,7 +30,7 @@ public class SimulationWorld extends World
     private var dayCountLabel:TextEntity;
     private var headingLabels:Vector.<TextEntity> = new <TextEntity>[];
     private var simulation:Simulation;
-    private var meeples:Vector.<SimulationMeeple> = new Vector.<SimulationMeeple>();
+    private var meeples:Vector.<SimulationMeeple>;
 
     private var freedomSector:Sector;
     private var jailSector:Sector;
@@ -47,8 +47,19 @@ public class SimulationWorld extends World
         changeState(STATE_PAUSED_UNKNOWN);
     }
 
+    private function resetSimulation():void
+    {
+        simulation = new Simulation();
+        for each (var meeple:SimulationMeeple in meeples) {
+            remove(meeple);
+        }
+        initializeMeeples();
+        setMeepleHomes();
+    }
+
     private function initializeMeeples():void
     {
+        meeples = new Vector.<SimulationMeeple>();
         for each (var individual:Individual in simulation.getIndividuals()) {
             var meeple:SimulationMeeple = new SimulationMeeple(individual, FP.rand(FP.width), FP.rand(FP.height));
             meeples.push(meeple);
@@ -197,6 +208,9 @@ public class SimulationWorld extends World
                 if (Input.pressed(Key.RIGHT)) {
                     changeState(STATE_ANALYSIS_COVARIATES);
                 }
+                if (Input.pressed(Key.DOWN)) {
+                    finishSimulation();
+                }
                 break;
             case STATE_ANALYSIS_COVARIATES:
                 if (Input.pressed(Key.LEFT)) {
@@ -257,6 +271,7 @@ public class SimulationWorld extends World
                 paused = true;
                 break;
             case STATE_PAUSED_COVARIATES:
+                resetSimulation();
                 sendMeeplesHome();
                 colorMeeples();
                 paused = true;

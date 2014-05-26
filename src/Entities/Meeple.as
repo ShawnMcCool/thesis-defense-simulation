@@ -28,7 +28,6 @@ public class Meeple extends Entity
 
     public function setEventStyle():void
     {
-
         sprMeeple = new Spritemap(EVENTMEEPLE, 51, 51);
         sprMeeple.centerOrigin();
         sprMeeple.scale = 1;
