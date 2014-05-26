@@ -40,7 +40,7 @@ public class TitleWorld extends World
 
     override public function update():void
     {
-        if (Input.pressed(Key.RIGHT)) {
+        if (Input.pressed(Key.PAGE_DOWN)) {
             WorldManager.switchTo("unknown_simulation");
         }
     }
