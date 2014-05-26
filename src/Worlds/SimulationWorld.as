@@ -143,7 +143,7 @@ public class SimulationWorld extends World
         switch (state) {
             case STATE_PAUSED_COVARIATES:
                 if (Input.pressed(Key.LEFT)) {
-
+                    previousWorld();
                 }
                 if (Input.pressed(Key.RIGHT)) {
                     if (simulationDone()) {
@@ -179,6 +179,11 @@ public class SimulationWorld extends World
                 }
                 break;
         }
+    }
+
+    private function previousWorld():void
+    {
+        WorldManager.switchTo("unknown_simulation");
     }
 
     protected function nextWorld():void

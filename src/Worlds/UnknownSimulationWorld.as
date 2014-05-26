@@ -1,7 +1,6 @@
 package Worlds
 {
 import Simulation.Simulation;
-import Entities.SimulationMeeple;
 
 public class UnknownSimulationWorld extends SimulationWorld
 {
@@ -12,6 +11,11 @@ public class UnknownSimulationWorld extends SimulationWorld
 
     override protected function colorMeeples():void
     {
+    }
+
+    private function previousWorld():void
+    {
+        WorldManager.switchTo("title");
     }
 
     override protected function nextWorld():void
