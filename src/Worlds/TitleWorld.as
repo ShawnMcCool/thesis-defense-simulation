@@ -30,7 +30,7 @@ public class TitleWorld extends World
 
         titleEntity = new TextEntity(
             "Recurrent event model for\npopulation size estimation",
-            0x051C24,
+            0x444444,
             82,
             0, FP.halfHeight - 200
         );
