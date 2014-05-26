@@ -126,6 +126,10 @@ public class SimulationWorld extends World
             simulation.Update();
         }
 
+        if (state == STATE_RUNNING_COVARIATES) {
+            colorMeeples();
+        }
+
         updateLabels();
         updateInput();
     }
