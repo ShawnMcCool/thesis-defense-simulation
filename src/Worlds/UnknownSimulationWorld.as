@@ -12,9 +12,6 @@ public class UnknownSimulationWorld extends SimulationWorld
 
     override protected function colorMeeples():void
     {
-        for each (var meeple:SimulationMeeple in meeples) {
-            meeple.setMeepleColorToCovariate();
-        }
     }
 
     override protected function nextWorld():void
