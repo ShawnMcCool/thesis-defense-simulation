@@ -11,14 +11,17 @@ import Simulation.Simulation;
 public class WorldManager
 {
     private static var worlds:Dictionary = new Dictionary();
+    private static var simulation:Simulation;
 
     public function WorldManager() {}
 
     public static function init():void
     {
-        var simulation:Simulation = new Simulation();
-
+        var unknownSimulation:Simulation = new Simulation();
         add("title", new TitleWorld());
+        add("unknown_simulation", new UnknownSimulationWorld(unknownSimulation));
+
+        var simulation:Simulation = new Simulation();
         add("simulation", new SimulationWorld(simulation));
         add("history", new IndividualHistoryWorld(simulation));
         add("summary", new SummaryWorld(simulation));

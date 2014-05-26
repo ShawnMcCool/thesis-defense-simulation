@@ -17,9 +17,6 @@ import Entities.SimulationMeeple;
 
 public class SimulationWorld extends World
 {
-    private const STATE_PAUSED_UNKNOWN:int = 0;
-    private const STATE_RUNNING_UNKNOWN:int = 1;
-    private const STATE_ANALYSIS_UNKNOWN:int = 2;
     private const STATE_PAUSED_COVARIATES:int = 3;
     private const STATE_RUNNING_COVARIATES:int = 4;
     private const STATE_ANALYSIS_COVARIATES:int = 5;
@@ -29,8 +26,8 @@ public class SimulationWorld extends World
 
     private var dayCountLabel:TextEntity;
     private var headingLabels:Vector.<TextEntity> = new <TextEntity>[];
-    private var simulation:Simulation;
-    private var meeples:Vector.<SimulationMeeple>;
+    protected var simulation:Simulation;
+    protected var meeples:Vector.<SimulationMeeple>;
 
     private var freedomSector:Sector;
     private var jailSector:Sector;
@@ -44,17 +41,7 @@ public class SimulationWorld extends World
         initializeHud();
         setMeepleHomes();
         initializeSectors();
-        changeState(STATE_PAUSED_UNKNOWN);
-    }
-
-    private function resetSimulation():void
-    {
-        simulation = new Simulation();
-        for each (var meeple:SimulationMeeple in meeples) {
-            remove(meeple);
-        }
-        initializeMeeples();
-        setMeepleHomes();
+        changeState(STATE_PAUSED_COVARIATES);
     }
 
     private function initializeMeeples():void
@@ -78,9 +65,9 @@ public class SimulationWorld extends World
     {
         dayCountLabel = new TextEntity(
             "0",
-            0xFFFFFF,
-            48,
-            20, 40
+            0x444444,
+            32,
+            20, 50
         );
         dayCountLabel.SetPrefix("Day ");
         add(dayCountLabel);
@@ -154,44 +141,9 @@ public class SimulationWorld extends World
     private function updateInput():void
     {
         switch (state) {
-            case STATE_PAUSED_UNKNOWN:
-                if (Input.pressed(Key.LEFT)) {
-                    WorldManager.switchTo("title");
-                }
-                if (Input.pressed(Key.RIGHT)) {
-                    if (simulationDone()) {
-                        changeState(STATE_ANALYSIS_UNKNOWN);
-                        return;
-                    }
-                    changeState(STATE_RUNNING_UNKNOWN);
-                }
-                break;
-            case STATE_RUNNING_UNKNOWN:
-                if (Input.pressed(Key.LEFT)) {
-                    changeState(STATE_PAUSED_UNKNOWN);
-                }
-                if (Input.pressed(Key.RIGHT)) {
-                    changeState(STATE_ANALYSIS_UNKNOWN);
-                }
-                if (Input.pressed(Key.DOWN)) {
-                    finishSimulation();
-                }
-                break;
-            case STATE_ANALYSIS_UNKNOWN:
-                if (Input.pressed(Key.LEFT)) {
-                    if (simulationDone()) {
-                        changeState(STATE_PAUSED_UNKNOWN);
-                        return;
-                    }
-                    changeState(STATE_RUNNING_UNKNOWN);
-                }
-                if (Input.pressed(Key.RIGHT)) {
-                    changeState(STATE_PAUSED_COVARIATES);
-                }
-                break;
             case STATE_PAUSED_COVARIATES:
                 if (Input.pressed(Key.LEFT)) {
-                    changeState(STATE_ANALYSIS_UNKNOWN);
+
                 }
                 if (Input.pressed(Key.RIGHT)) {
                     if (simulationDone()) {
@@ -222,11 +174,16 @@ public class SimulationWorld extends World
                 }
                 if (Input.pressed(Key.RIGHT)) {
                     if (simulationDone()) {
-                        WorldManager.switchTo("history");
+                        nextWorld();
                     }
                 }
                 break;
         }
+    }
+
+    protected function nextWorld():void
+    {
+        WorldManager.switchTo("history");
     }
 
     private function finishSimulation():void
@@ -242,7 +199,7 @@ public class SimulationWorld extends World
         return simulation.getDayCount() == 30;
     }
 
-    private function colorMeeples():void
+    protected function colorMeeples():void
     {
         for each (var meeple:SimulationMeeple in meeples) {
             meeple.setMeepleColorToCovariate();
@@ -255,23 +212,7 @@ public class SimulationWorld extends World
         headingLabels[state].visible = true;
 
         switch (state) {
-            case STATE_PAUSED_UNKNOWN:
-                sendMeeplesHome();
-                colorAllMeeplesUnknown();
-                paused = true;
-                break;
-            case STATE_RUNNING_UNKNOWN:
-                sendMeeplesHome();
-                colorAllMeeplesUnknown();
-                paused = false;
-                break;
-            case STATE_ANALYSIS_UNKNOWN:
-                sendMeeplesToJail();
-                colorAllMeeplesUnknown();
-                paused = true;
-                break;
             case STATE_PAUSED_COVARIATES:
-                resetSimulation();
                 sendMeeplesHome();
                 colorMeeples();
                 paused = true;

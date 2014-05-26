@@ -7,6 +7,7 @@ import net.flashpunk.graphics.Text;
 public class TextEntity extends Entity
 {
     private var text:Text;
+    private var size:int;
     private var prefix:String = "";
 	private var color:Number;
 
@@ -15,6 +16,7 @@ public class TextEntity extends Entity
         setOrigin(0, 0);
         this.x = x;
         this.y = y;
+        this.size = size;
 		
         SetSize(size);
         SetText(text);
@@ -38,10 +40,11 @@ public class TextEntity extends Entity
 
     public function SetText(text:String):void
     {
+        SetSize(this.size);
         this.text = new Text(prefix + text);
         graphic = this.text;
-		SetColor(color);
-	}
+        SetColor(color);
+    }
 
     public function center():void
     {

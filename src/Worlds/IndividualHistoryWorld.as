@@ -12,6 +12,8 @@ import Collections.RecordedMeepleArray;
 
 import Utils.TextEntity;
 
+import net.flashpunk.FP;
+
 import net.flashpunk.World;
 import net.flashpunk.utils.Input;
 import net.flashpunk.utils.Key;
@@ -34,19 +36,24 @@ public class IndividualHistoryWorld extends World
         initializeLabels();
     }
 
+    public function setSimulation(simulation:Simulation):void
+    {
+        this.simulation = simulation;
+    }
+
     private function initializeArrays():void
     {
         var individual:Individual = selectIndividual();
 
-        actualArray = new ActualMeepleArray(individual, 100, 100);
+        actualArray = new ActualMeepleArray(individual, 100, 250);
         add(actualArray);
-        recordedArray = new RecordedMeepleArray(individual, 100, 200);
+        recordedArray = new RecordedMeepleArray(individual, 100, 350);
         add(recordedArray);
-        poissonArray = new PoissonMeepleArray(individual, 100, 300);
+        poissonArray = new PoissonMeepleArray(individual, 100, 450);
         add(poissonArray);
-        intervalArray = new IntervalMeepleArray(individual, 100, 400);
+        intervalArray = new IntervalMeepleArray(individual, 100, 550);
         add(intervalArray);
-        proportionalArray = new ProportionalMeepleArray(individual, 100, 500);
+        proportionalArray = new ProportionalMeepleArray(individual, 100, 650);
         add(proportionalArray);
     }
 
@@ -56,7 +63,7 @@ public class IndividualHistoryWorld extends World
             "Actual",
             0x000000,
             32,
-            30, 80
+            30, 230
         );
         add(actualLabel);
 
@@ -64,7 +71,7 @@ public class IndividualHistoryWorld extends World
             "Recorded",
             0x000000,
             32,
-            30, 180
+            30, 330
         );
         add(recordedLabel);
 
@@ -72,7 +79,7 @@ public class IndividualHistoryWorld extends World
             "Poisson\nEquivalent",
             0x000000,
             32,
-            30, 280
+            30, 430
         );
         add(poissonLabel);
 
@@ -80,7 +87,7 @@ public class IndividualHistoryWorld extends World
             "Interval\nStable",
             0x000000,
             32,
-            30, 380
+            30, 530
         );
         add(intervalLabel);
 
@@ -88,10 +95,18 @@ public class IndividualHistoryWorld extends World
             "Pro-\nportional",
             0x000000,
             32,
-            30, 480
+            30, 630
         );
         add(proportionalLabel);
 
+        var heading:TextEntity = new TextEntity(
+            "Time-varying covariate methods",
+            0x000000,
+            48,
+            FP.halfWidth, 30
+        );
+        heading.center();
+        add(heading);
     }
 
     override public function begin():void
