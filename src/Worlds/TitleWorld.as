@@ -21,7 +21,7 @@ public class TitleWorld extends World
     {
         authorEntity = new TextEntity(
             "Author: Danielle McCool\nSupervisor: Maarten Cruyff",
-			0x611A23,
+			0xFF0000,
             32,
             0, FP.halfHeight + 100
         );
