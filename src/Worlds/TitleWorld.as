@@ -25,7 +25,7 @@ public class TitleWorld extends World
             32,
             0, FP.halfHeight + 100
         );
-        authorEntity.CenterText();
+        authorEntity.center();
         add(authorEntity);
 
         titleEntity = new TextEntity(
@@ -34,7 +34,7 @@ public class TitleWorld extends World
             82,
             0, FP.halfHeight - 200
         );
-        titleEntity.CenterText();
+        titleEntity.center();
         add(titleEntity);
     }
 

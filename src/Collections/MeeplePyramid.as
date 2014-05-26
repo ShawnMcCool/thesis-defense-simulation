@@ -44,6 +44,7 @@ public class MeeplePyramid extends MeepleArray
     {
         for each (var meeple:SummaryMeeple in meeples) {
             meeple.setColorToUnknown();
+            meeple.tintByEventCount();
         }
     }
 

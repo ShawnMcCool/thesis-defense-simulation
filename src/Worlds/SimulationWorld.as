@@ -27,9 +27,7 @@ public class SimulationWorld extends World
     private var paused:Boolean = true;
 
     private var dayCountLabel:TextEntity;
-    private var meeplesWithEventsCountLabel:TextEntity;
-    private var meepleEventCriteriaLabel:TextEntity;
-
+    private var headingLabels:Vector.<TextEntity> = new <TextEntity>[];
     private var simulation:Simulation;
     private var meeples:Vector.<SimulationMeeple> = new Vector.<SimulationMeeple>();
 
@@ -75,23 +73,22 @@ public class SimulationWorld extends World
         dayCountLabel.SetPrefix("Day ");
         add(dayCountLabel);
 
-        meepleEventCriteriaLabel = new TextEntity(
-            "0",
-            0x000000,
-            32,
-            200, 20
-        );
-        meepleEventCriteriaLabel.SetPrefix(">2 Events: ");
-        add (meepleEventCriteriaLabel);
+        var headings:Array = [
+            "Population",
+            "Population Being Captured",
+            "Captured Members",
+            "With Covariates",
+            "Population Being Captured",
+            "Captured Members"
+        ];
 
-        meeplesWithEventsCountLabel = new TextEntity(
-            "0",
-            0x000000,
-            32,
-            400, 20
-        );
-        meeplesWithEventsCountLabel.SetPrefix("Have Had Events: ");
-        add (meeplesWithEventsCountLabel);
+        for each (var title:String in headings) {
+            var text:TextEntity = new TextEntity(title, 0x131313, 48, FP.halfWidth, 50);
+            text.center();
+            text.visible = false;
+            headingLabels.push(text);
+            add(text);
+        }
     }
 
     private function setMeepleHomes():void
@@ -112,8 +109,8 @@ public class SimulationWorld extends World
 
     private function initializeSectors():void
     {
-        freedomSector = new Sector(0, 100, FP.width, FP.height);
-        freedomSector.setExclusionRadius(380);
+        freedomSector = new Sector(0, 140, FP.width, FP.height);
+        freedomSector.setExclusionRadius(320);
         add(freedomSector);
 
         jailSector = new Sector(0, 100, FP.width, FP.height);
@@ -145,6 +142,10 @@ public class SimulationWorld extends World
                 WorldManager.switchTo("title");
             }
             if (Input.pressed(Key.RIGHT)) {
+                if (simulationDone()) {
+                    changeState(STATE_ANALYSIS_UNKNOWN);
+                    return;
+                }
                 changeState(STATE_RUNNING_UNKNOWN);
             }
         } else if (state == STATE_RUNNING_UNKNOWN) {
@@ -156,6 +157,10 @@ public class SimulationWorld extends World
             }
         } else if (state == STATE_ANALYSIS_UNKNOWN) {
             if (Input.pressed(Key.LEFT)) {
+                if (simulationDone()) {
+                    changeState(STATE_PAUSED_UNKNOWN);
+                    return;
+                }
                 changeState(STATE_RUNNING_UNKNOWN);
             }
             if (Input.pressed(Key.RIGHT)) {
@@ -166,6 +171,10 @@ public class SimulationWorld extends World
                 changeState(STATE_ANALYSIS_UNKNOWN);
             }
             if (Input.pressed(Key.RIGHT)) {
+                if (simulationDone()) {
+                    changeState(STATE_ANALYSIS_COVARIATES);
+                    return;
+                }
                 changeState(STATE_RUNNING_COVARIATES);
             }
         } else if (state == STATE_RUNNING_COVARIATES) {
@@ -177,14 +186,23 @@ public class SimulationWorld extends World
             }
         } else if (state == STATE_ANALYSIS_COVARIATES) {
             if (Input.pressed(Key.LEFT)) {
+                if (simulationDone()) {
+                    changeState(STATE_PAUSED_COVARIATES);
+                    return;
+                }
                 changeState(STATE_RUNNING_COVARIATES);
             }
             if (Input.pressed(Key.RIGHT)) {
-                if (simulation.CountIndividualsWithMinimumEvents(3)) {
+                if (simulationDone()) {
                     WorldManager.switchTo("history");
                 }
             }
         }
+    }
+
+    private function simulationDone():Boolean
+    {
+        return simulation.GetDayCount() == 30;
     }
 
     private function colorMeeples():void
@@ -196,6 +214,9 @@ public class SimulationWorld extends World
 
     private function changeState(state:int):void
     {
+        headingLabels[this.state].visible = false;
+        headingLabels[state].visible = true;
+
         if (state == STATE_PAUSED_UNKNOWN) {
             sendMeeplesHome();
             colorAllMeeplesUnknown();
@@ -254,8 +275,6 @@ public class SimulationWorld extends World
     private function updateLabels():void
     {
         dayCountLabel.SetText(simulation.GetDayCount().toString());
-        meepleEventCriteriaLabel.SetText(simulation.CountIndividualsWithMinimumEvents(3).toString());
-        meeplesWithEventsCountLabel.SetText(simulation.CountIndividualsWithEvents().toString());
     }
 }
 }

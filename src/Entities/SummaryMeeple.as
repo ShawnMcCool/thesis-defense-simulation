@@ -54,6 +54,11 @@ public class SummaryMeeple extends Meeple
         return individual;
     }
 
+    public function tintByEventCount():void
+    {
+        setTint(individual.getTotalEventCount());
+    }
+
     public function colorPoisson():void
     {
         var color:Number = individual.getFirstEventColor();
@@ -63,7 +68,6 @@ public class SummaryMeeple extends Meeple
         }
 
         setColor(color);
-        setTint(individual.getTotalEventCount());
     }
 }
 }

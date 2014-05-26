@@ -43,7 +43,7 @@ public class TextEntity extends Entity
 		SetColor(color);
 	}
 
-    public function CenterText():void
+    public function center():void
     {
         this.x = FP.halfWidth - text.textWidth/2;
     }
