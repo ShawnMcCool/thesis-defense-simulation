@@ -1,5 +1,7 @@
 package Worlds
 {
+import Entities.SimulationMeeple;
+
 import Utils.Sector;
 import Utils.TextEntity;
 
@@ -38,6 +40,7 @@ public class SimulationWorld extends World
         super();
         this.simulation = simulation;
 
+        changeState(STATE_INITIAL);
         initializeMeeples();
         initializeHud();
         setMeepleHomes();
@@ -50,6 +53,7 @@ public class SimulationWorld extends World
             var meeple:SimulationMeeple = new SimulationMeeple(individual, FP.rand(FP.width), FP.rand(FP.height));
             meeples.push(meeple);
             add(meeple);
+            meeple.setColorUnknown();
         }
 
         meeples.sort(shuffleVector);
@@ -123,6 +127,7 @@ public class SimulationWorld extends World
 
         if (state == STATE_RUNNING) {
             simulation.Update();
+            colorMeeples();
         }
 
         updateLabels();
@@ -141,14 +146,15 @@ public class SimulationWorld extends World
                 WorldManager.switchTo("title");
             }
             if (Input.pressed(Key.RIGHT)) {
-                ChangeState(STATE_RUNNING);
+                changeState(STATE_RUNNING);
+                colorMeeples();
             }
         } else if (state == STATE_RUNNING) {
             if (Input.pressed(Key.LEFT)) {
-                ChangeState(STATE_INITIAL);
+                changeState(STATE_INITIAL);
             }
             if (Input.pressed(Key.RIGHT)) {
-                ChangeState(STATE_JAIL_ANALYSIS);
+                changeState(STATE_JAIL_ANALYSIS);
             }
             if (Input.pressed(Key.DOWN)) {
                 for (var i:int = simulation.GetDayCount(); i<30; i++) {
@@ -157,7 +163,7 @@ public class SimulationWorld extends World
             }
         } else if (state == STATE_JAIL_ANALYSIS) {
             if (Input.pressed(Key.LEFT)) {
-                ChangeState(STATE_RUNNING);
+                changeState(STATE_RUNNING);
             }
             if (Input.pressed(Key.RIGHT)) {
                 if (simulation.CountIndividualsWithMinimumEvents(3)) {
@@ -167,7 +173,21 @@ public class SimulationWorld extends World
         }
     }
 
-    private function ChangeState(state:int):void
+    private function markMeeplesUnknown():void
+    {
+        for each (var meeple:SimulationMeeple in meeples) {
+            meeple.setColorUnknown();
+        }
+    }
+
+    private function colorMeeples():void
+    {
+        for each (var meeple:SimulationMeeple in meeples) {
+            meeple.setMeepleColorToCovariate();
+        }
+    }
+
+    private function changeState(state:int):void
     {
         if (state == STATE_RUNNING) {
             sendMeeplesHome();

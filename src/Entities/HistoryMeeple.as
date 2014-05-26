@@ -5,7 +5,6 @@ import Simulation.IndividualState;
 public class HistoryMeeple extends Meeple
 {
     private var state:IndividualState;
-    protected var unknownColor:Number = 0xC1C1C1;
 
     public function HistoryMeeple(state:IndividualState)
     {

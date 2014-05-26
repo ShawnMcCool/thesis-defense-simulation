@@ -66,9 +66,13 @@ public class SimulationMeeple extends Meeple
         }
     }
 
-    private function updateStyles():void
+    public function setMeepleColorToCovariate():void
     {
         setColor(individual.getColor());
+    }
+
+    private function updateStyles():void
+    {
         if (HadEvent()) {
             sprMeeple.scale = eventScaleSize;
 			setTint(GetTotalEventCount());

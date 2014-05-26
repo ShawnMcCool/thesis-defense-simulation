@@ -5,7 +5,6 @@ import Simulation.Individual;
 public class SummaryMeeple extends Meeple
 {
     private var individual:Individual;
-    protected var unknownColor:Number = 0xC1C1C1;
 
     public function SummaryMeeple(individual:Individual)
     {

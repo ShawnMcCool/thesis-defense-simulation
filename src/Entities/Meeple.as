@@ -12,12 +12,18 @@ public class Meeple extends Entity
     protected var previousPoint:Point = new Point(0, 0);
     protected var speed:Number = 10;
     public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
+    protected var unknownColor:Number = 0xC1C1C1;
 
     public function Meeple(x:Number = 0, y:Number = 0)
     {
         super(x, y, sprMeeple);
         setHitbox(0, 0, 0, 0);
         configureGraphics();
+    }
+
+    public function setColorUnknown():void
+    {
+        setColor(unknownColor);
     }
 
     public function setColor(color:Number):void
