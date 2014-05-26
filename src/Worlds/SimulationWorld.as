@@ -17,9 +17,9 @@ import Entities.SimulationMeeple;
 
 public class SimulationWorld extends World
 {
-    private const STATE_PAUSED_COVARIATES:int = 1;
-    private const STATE_RUNNING_COVARIATES:int = 2;
-    private const STATE_ANALYSIS_COVARIATES:int = 3;
+    private const STATE_PAUSED_COVARIATES:int = 0;
+    private const STATE_RUNNING_COVARIATES:int = 1;
+    private const STATE_ANALYSIS_COVARIATES:int = 2;
 
     protected var headings:Array = [
         "Covariates",
@@ -212,7 +212,6 @@ public class SimulationWorld extends World
     {
         headingLabels[this.state].visible = false;
         headingLabels[state].visible = true;
-
         switch (state) {
             case STATE_PAUSED_COVARIATES:
                 sendMeeplesHome();

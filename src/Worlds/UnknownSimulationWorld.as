@@ -2,6 +2,8 @@ package Worlds
 {
 import Simulation.Simulation;
 
+import net.flashpunk.FP;
+
 public class UnknownSimulationWorld extends SimulationWorld
 {
     public function UnknownSimulationWorld(simulation:Simulation)
