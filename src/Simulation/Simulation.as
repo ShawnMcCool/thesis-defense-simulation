@@ -2,7 +2,7 @@ package Simulation
 {
 public class Simulation
 {
-    private var daysPerSecond:int = 2;
+    private var daysPerSecond:int = 1;
     private var numberOfIndividuals:int = 104;
     private var numberOfProblemChildren:int = 4;
     private var problemChildHazardRate:Number = .2;
