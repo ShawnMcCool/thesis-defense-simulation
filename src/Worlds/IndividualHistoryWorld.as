@@ -147,9 +147,6 @@ public class IndividualHistoryWorld extends World
             WorldManager.switchTo("simulation");
         }
         if (Input.pressed(Key.PAGE_DOWN)) {
-<<<<<<< HEAD
-            advanceIndividual();
-=======
             WorldManager.switchTo("summary");
         }
         if (Input.pressed(Key.PERIOD)) {
@@ -159,7 +156,6 @@ public class IndividualHistoryWorld extends World
             remove(intervalArray);
             remove(proportionalArray);
             initializeArrays();
->>>>>>> 7fdb8fa... updates
         }
     }
 
