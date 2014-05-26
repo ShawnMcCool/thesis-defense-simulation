@@ -1,5 +1,7 @@
 package Worlds
 {
+import Entities.SimulationMeeple;
+
 import Simulation.Simulation;
 
 import net.flashpunk.FP;
@@ -18,6 +20,9 @@ public class UnknownSimulationWorld extends SimulationWorld
 
     override protected function colorMeeples():void
     {
+        for each (var meeple:SimulationMeeple in meeples) {
+            meeple.setColorToUnknown();
+        }
     }
 
     override protected function previousWorld():void
