@@ -73,7 +73,7 @@
 		public static const F14:int = 125;
 		public static const F15:int = 126;
 		
-		public static const PERIOD:int = 46;
+		public static const PERIOD:int = 190;
 
 		public static const DIGIT_0:int = 48;
 		public static const DIGIT_1:int = 49;
