@@ -35,7 +35,7 @@ package Simulation
 		}
 		
 		public function DuplicateStateWithoutEvent():IndividualState
-		{3
+		{
 			return new IndividualState(GetBeta(), GetColor(), GetEventCount());
 		}
 		
