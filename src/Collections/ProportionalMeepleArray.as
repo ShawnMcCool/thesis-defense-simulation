@@ -17,7 +17,7 @@ public class ProportionalMeepleArray extends HistoryMeepleArray
 
         for each (var meeple:HistoryMeeple in meeples) {
             if (meeple.hadEvent()) {
-                colors.push(meeple.getState().GetColor());
+                colors.push(meeple.getState().getColor());
                 meeple.setColorToCovariate();
             } else {
                 meeple.SetColorToUnknown();

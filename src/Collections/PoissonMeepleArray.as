@@ -23,7 +23,7 @@ public class PoissonMeepleArray extends HistoryMeepleArray
         }
 
         for each (meeple in meeples) {
-            meeple.setColor(firstState.GetColor());
+            meeple.setColor(firstState.getColor());
         }
     }
 }

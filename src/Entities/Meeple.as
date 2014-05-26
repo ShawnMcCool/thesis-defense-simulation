@@ -9,16 +9,30 @@ public class Meeple extends Entity
 {
     [Embed(source="../../assets/scaled_meeple_spritesheet.png")]
     protected var MEEPLE:Class;
+
+    [Embed(source="../../assets/event_meeple.png")]
+    protected var EVENTMEEPLE:Class;
+
     protected var previousPoint:Point = new Point(0, 0);
     protected var speed:Number = 10;
-    public var sprMeeple:Spritemap = new Spritemap(MEEPLE, 51, 51);
+    public var sprMeeple:Spritemap;
     protected var unknownColor:Number = 0xC1C1C1;
 
     public function Meeple(x:Number = 0, y:Number = 0)
     {
+        sprMeeple = new Spritemap(MEEPLE, 51, 51);
         super(x, y, sprMeeple);
         setHitbox(0, 0, 0, 0);
         configureGraphics();
+    }
+
+    public function setEventStyle():void
+    {
+
+//        sprMeeple = new Spritemap(EVENTMEEPLE, 51, 51);
+//        sprMeeple.centerOrigin();
+//        sprMeeple.scale = 1;
+//        graphic = sprMeeple;
     }
 
     public function setColorUnknown():void

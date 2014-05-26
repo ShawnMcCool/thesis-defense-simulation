@@ -27,12 +27,19 @@ public class HistoryMeepleArray extends MeepleArray
     protected function buildMeeplesFromHistory():void
     {
         for each (var state:IndividualState in individual.getHistory()) {
-            addMeeple(new HistoryMeeple(state));
+            var meeple:HistoryMeeple = new HistoryMeeple(state);
+            addMeeple(meeple);
+
+            if (state.hadEvent()) {
+                meeple.setEventStyle();
+            }
         }
         colorMeeples();
         orderMeeples();
     }
 
-    protected function colorMeeples():void {}
+    protected function colorMeeples():void
+    {
+    }
 }
 }

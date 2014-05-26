@@ -9,14 +9,14 @@ public class Individual
     public function Individual(baseHazardRate:Number = .0046666)
     {
         this.baseHazardRate = baseHazardRate;
-        currentState = IndividualState.GenerateNewState(0);
+        currentState = IndividualState.generateNewState(0);
     }
 
     public function getFirstEventColor():Number
     {
         for each (var state:IndividualState in history) {
-            if (state.HadEvent()) {
-                return state.GetColor();
+            if (state.hadEvent()) {
+                return state.getColor();
             }
         }
         return 0;
@@ -29,18 +29,18 @@ public class Individual
 
     public function hadEvent():Boolean
     {
-        return currentState.HadEvent();
+        return currentState.hadEvent();
     }
 
     public function getColor():Number
     {
-        return currentState.GetColor();
+        return currentState.getColor();
     }
 
     public function hasEverHadAnEvent():Boolean
     {
         for each (var state:IndividualState in history) {
-            if (state.HadEvent()) return true;
+            if (state.hadEvent()) return true;
         }
         return false;
     }
@@ -50,7 +50,7 @@ public class Individual
         var events:int = 0;
 
         for each (var state:IndividualState in history) {
-            if (state.HadEvent()) {
+            if (state.hadEvent()) {
                 events++;
             }
         }
@@ -62,25 +62,25 @@ public class Individual
     {
         assignNewState();
         if (hasEvent()) {
-            currentState.EventOccurs();
+            currentState.eventOccurs();
         }
         history.push(currentState);
     }
 
     private function assignNewState():void
     {
-        var eventCount:Number = this.currentState ? this.currentState.GetEventCount() : 0;
+        var eventCount:Number = this.currentState ? this.currentState.getEventCount() : 0;
          
-		if (IndividualState.DoesStateChange()){
-			this.currentState = IndividualState.GenerateNewState(eventCount);
+		if (IndividualState.doesStateChange()){
+			this.currentState = IndividualState.generateNewState(eventCount);
 		} else {
-			this.currentState = this.currentState.DuplicateStateWithoutEvent();
+			this.currentState = this.currentState.duplicateStateWithoutEvent();
 		}
     }
 
     private function getHazardRate():Number
     {
-        return baseHazardRate + currentState.GetBeta();
+        return baseHazardRate + currentState.getBeta();
     }
 
     private function hasEvent():Boolean

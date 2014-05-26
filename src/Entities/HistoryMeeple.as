@@ -15,7 +15,7 @@ public class HistoryMeeple extends Meeple
 
     public function hadEvent():Boolean
     {
-        return state.HadEvent();
+        return state.hadEvent();
     }
 
     public function isColorUnknown():Boolean
@@ -25,7 +25,7 @@ public class HistoryMeeple extends Meeple
 
     public function setColorToCovariate():void
     {
-        setColor(state.GetColor());
+        setColor(state.getColor());
     }
 
     public function SetColorToUnknown():void

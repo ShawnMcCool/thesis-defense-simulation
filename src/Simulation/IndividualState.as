@@ -16,13 +16,13 @@ package Simulation
 			this.eventCount = eventCount;
 		}
 		
-		public static function DoesStateChange():Boolean
+		public static function doesStateChange():Boolean
 		{
 			return (FP.rand(9) < 2);
 			
 		}
 		
-		public static function GenerateNewState(eventCount:int):IndividualState
+		public static function generateNewState(eventCount:int):IndividualState
 		{
 			switch(FP.choose(0, 1, 2))
 			{
@@ -34,32 +34,32 @@ package Simulation
             return new IndividualState(.004, 0xf74d81, eventCount);
 		}
 		
-		public function DuplicateStateWithoutEvent():IndividualState
+		public function duplicateStateWithoutEvent():IndividualState
 		{
-			return new IndividualState(GetBeta(), GetColor(), GetEventCount());
+			return new IndividualState(getBeta(), getColor(), getEventCount());
 		}
 		
-		public function GetBeta():Number
+		public function getBeta():Number
 		{
 			return beta;
 		}
 		
-		public function GetEventCount():int
+		public function getEventCount():int
 		{
 			return eventCount;
 		}
 		
-		public function EventOccurs():void
+		public function eventOccurs():void
 		{
 			event = true;
 		}
 		
-		public function HadEvent():Boolean
+		public function hadEvent():Boolean
 		{
 			return event;
 		}
 
-        public function GetColor():Number
+        public function getColor():Number
         {
             return color;
         }
