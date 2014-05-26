@@ -79,11 +79,12 @@ public class SimulationWorld extends World
         dayCountLabel = new TextEntity(
             "0",
             0x000000,
-            32,
-            20, 20
+            48,
+            20, 40
         );
         dayCountLabel.SetPrefix("Day ");
         add(dayCountLabel);
+		dayCountLabel.SetColor(0xFF0000);
 
         var headings:Array = [
             "A hidden population",
@@ -95,7 +96,7 @@ public class SimulationWorld extends World
         ];
 
         for each (var title:String in headings) {
-            var text:TextEntity = new TextEntity(title, 0x131313, 48, FP.halfWidth, 50);
+            var text:TextEntity = new TextEntity(title, 0x444444, 48, FP.halfWidth, 30);
             text.center();
             text.visible = false;
             headingLabels.push(text);
