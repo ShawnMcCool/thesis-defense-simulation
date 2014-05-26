@@ -38,19 +38,24 @@ public class SummaryWorld extends World
                 }
                 break;
             case STATE_REMOVE_WITHOUT_EVENTS:
-                if (Input.pressed(Key.RIGHT)) {
-                    changeState(STATE_SHOW_ALL);
-                }
                 if (Input.pressed(Key.LEFT)) {
                     changeState(STATE_ALL_UNKNOWN);
                 }
+                if (Input.pressed(Key.RIGHT)) {
+                    changeState(STATE_SHOW_ALL);
+                }
                 break;
             case STATE_SHOW_ALL:
+                if (Input.pressed(Key.LEFT)) {
+                    changeState(STATE_REMOVE_WITHOUT_EVENTS);
+                }
                 if (Input.pressed(Key.RIGHT)) {
                     changeState(STATE_COLOR_CAPTURED);
                 }
+                break;
+            case STATE_COLOR_CAPTURED:
                 if (Input.pressed(Key.LEFT)) {
-                    changeState(STATE_REMOVE_WITHOUT_EVENTS);
+                    changeState(STATE_SHOW_ALL);
                 }
                 break;
         }
