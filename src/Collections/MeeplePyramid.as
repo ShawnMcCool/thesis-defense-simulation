@@ -1,6 +1,7 @@
 package Collections
 {
 import Entities.SummaryMeeple;
+
 import Simulation.Individual;
 
 import net.flashpunk.FP;
@@ -11,7 +12,7 @@ public class MeeplePyramid extends MeepleArray
 
     public function MeeplePyramid(individuals:Vector.<Individual>)
     {
-        super(0,0);
+        super(0, 0);
         this.individuals = individuals;
     }
 
@@ -20,10 +21,33 @@ public class MeeplePyramid extends MeepleArray
         super.added();
         buildMeeples();
         arrangeMeeples();
-        colorMeeples();
+        colorAllMeeplesUnknown();
     }
 
-    private function colorMeeples():void
+    public function showAllMeeples():void
+    {
+        for each (var meeple:SummaryMeeple in meeples) {
+            meeple.show();
+        }
+    }
+
+    public function hideMeeplesWithoutEvents():void
+    {
+        for each (var meeple:SummaryMeeple in meeples) {
+            if (!meeple.hasEverHadAnEvent()) {
+                meeple.hide();
+            }
+        }
+    }
+
+    public function colorAllMeeplesUnknown():void
+    {
+        for each (var meeple:SummaryMeeple in meeples) {
+            meeple.setColorToUnknown();
+        }
+    }
+
+    public function colorMeeplesPoisson():void
     {
         for each (var meeple:SummaryMeeple in meeples) {
             meeple.colorPoisson();
@@ -47,8 +71,8 @@ public class MeeplePyramid extends MeepleArray
 
         for each (var meeple:SummaryMeeple in meeples) {
 
-            meeple.x = centeringMargin - ((perRow-1) * meepleXOffset / 2) + (meepleXOffset * rowCounter);
-            meeple.y = verticalMargin + rowHeight*currentRow;
+            meeple.x = centeringMargin - ((perRow - 1) * meepleXOffset / 2) + (meepleXOffset * rowCounter);
+            meeple.y = verticalMargin + rowHeight * currentRow;
 
             // update row counter
             rowCounter++;

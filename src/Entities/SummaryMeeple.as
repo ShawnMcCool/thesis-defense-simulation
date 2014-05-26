@@ -2,6 +2,8 @@ package Entities
 {
 import Simulation.Individual;
 
+import net.flashpunk.FP;
+
 public class SummaryMeeple extends Meeple
 {
     private var individual:Individual;
@@ -17,6 +19,21 @@ public class SummaryMeeple extends Meeple
         return individual.hadEvent();
     }
 
+    public function hasEverHadAnEvent():Boolean
+    {
+        return individual.hasEverHadAnEvent();
+    }
+
+    public function hide():void
+    {
+        visible = false;
+    }
+
+    public function show():void
+    {
+        visible = true;
+    }
+
     public function isColorUnknown():Boolean
     {
         return getColor() == unknownColor;
@@ -27,8 +44,9 @@ public class SummaryMeeple extends Meeple
         setColor(individual.getColor());
     }
 
-    public function SetColorToUnknown():void
+    public function setColorToUnknown():void
     {
+        FP.log("UNKNOWN");
         setColor(unknownColor);
     }
 
