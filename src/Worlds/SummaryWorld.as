@@ -30,31 +30,31 @@ public class SummaryWorld extends World
     {
         switch (state) {
             case STATE_ALL_UNKNOWN:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     WorldManager.switchTo("history");
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     changeState(STATE_REMOVE_WITHOUT_EVENTS);
                 }
                 break;
             case STATE_REMOVE_WITHOUT_EVENTS:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     changeState(STATE_ALL_UNKNOWN);
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     changeState(STATE_SHOW_ALL);
                 }
                 break;
             case STATE_SHOW_ALL:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     changeState(STATE_REMOVE_WITHOUT_EVENTS);
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     changeState(STATE_COLOR_CAPTURED);
                 }
                 break;
             case STATE_COLOR_CAPTURED:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     changeState(STATE_SHOW_ALL);
                 }
                 break;
