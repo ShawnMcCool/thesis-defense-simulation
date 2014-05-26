@@ -131,7 +131,6 @@ public class IndividualHistoryWorld extends World
         }
 
         meepleIndex = 1;
-        WorldManager.switchTo("summary");
         return selectIndividual();
     }
 

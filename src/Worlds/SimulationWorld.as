@@ -157,7 +157,7 @@ public class SimulationWorld extends World
                 if (Input.pressed(Key.PAGE_DOWN)) {
                     changeState(STATE_ANALYSIS_COVARIATES);
                 }
-                if (Input.pressed(Key.DOWN)) {
+                if (Input.pressed(Key.PERIOD)) {
                     finishSimulation();
                 }
                 break;
