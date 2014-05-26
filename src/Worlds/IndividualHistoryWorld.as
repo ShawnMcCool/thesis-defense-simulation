@@ -117,6 +117,7 @@ public class IndividualHistoryWorld extends World
 
     public function selectIndividual():Individual
     {
+        FP.log(meepleIndex);
         var individuals:Vector.<Individual> = simulation.getIndividuals();
 
         var counter:int = 0;
@@ -156,16 +157,6 @@ public class IndividualHistoryWorld extends World
             remove(proportionalArray);
             initializeArrays();
         }
-    }
-
-    private function advanceIndividual():void
-    {
-        remove(actualArray);
-        remove(recordedArray);
-        remove(poissonArray);
-        remove(intervalArray);
-        remove(proportionalArray);
-        initializeArrays();
     }
 
     private function meetsSelectionCriteria(individual:Individual):Boolean
