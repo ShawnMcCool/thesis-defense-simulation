@@ -118,7 +118,7 @@ public class SimulationWorld extends World
     {
         super.update();
 
-        if (!paused) {
+        if ( ! paused) {
             simulation.update();
         }
 
@@ -193,6 +193,9 @@ public class SimulationWorld extends World
         var count:int = simulation.getDayCount();
         for (var i:int = 0; i < (30 - count); i++) {
             simulation.nextDay();
+            for each (var meeple:SimulationMeeple in meeples) {
+                meeple.update();
+            }
         }
     }
 

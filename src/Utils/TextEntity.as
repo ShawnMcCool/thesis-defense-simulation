@@ -11,21 +11,21 @@ public class TextEntity extends Entity
     private var prefix:String = "";
 	private var color:Number;
 
-    public function TextEntity(text:String, color:Number = 0x000000, size:Number = 32, x:Number = 0, y:Number = 0)
+    public function TextEntity(text:String, color:Number = 0xFF0000, size:Number = 32, x:Number = 0, y:Number = 0)
     {
         setOrigin(0, 0);
         this.x = x;
         this.y = y;
         this.size = size;
-		
+
+        SetColor(color);
         SetSize(size);
         SetText(text);
-		SetColor(color);
     }
 	
 	public function SetColor(color:Number):void 
 	{
-		this.text.color = color;
+		this.color = color;
 	}
 	
     public function SetPrefix(prefix:String):void
@@ -42,8 +42,8 @@ public class TextEntity extends Entity
     {
         SetSize(this.size);
         this.text = new Text(prefix + text);
+        this.text.color = this.color;
         graphic = this.text;
-        SetColor(color);
     }
 
     public function center():void
