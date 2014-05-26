@@ -142,10 +142,10 @@ public class SimulationWorld extends World
     {
         switch (state) {
             case STATE_PAUSED_COVARIATES:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     previousWorld();
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     if (simulationDone()) {
                         changeState(STATE_ANALYSIS_COVARIATES);
                         return;
@@ -154,10 +154,10 @@ public class SimulationWorld extends World
                 }
                 break;
             case STATE_RUNNING_COVARIATES:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     changeState(STATE_PAUSED_COVARIATES);
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     changeState(STATE_ANALYSIS_COVARIATES);
                 }
                 if (Input.pressed(Key.DOWN)) {
@@ -165,14 +165,14 @@ public class SimulationWorld extends World
                 }
                 break;
             case STATE_ANALYSIS_COVARIATES:
-                if (Input.pressed(Key.LEFT)) {
+                if (Input.pressed(Key.PAGE_UP)) {
                     if (simulationDone()) {
                         changeState(STATE_PAUSED_COVARIATES);
                         return;
                     }
                     changeState(STATE_RUNNING_COVARIATES);
                 }
-                if (Input.pressed(Key.RIGHT)) {
+                if (Input.pressed(Key.PAGE_DOWN)) {
                     if (simulationDone()) {
                         nextWorld();
                     }

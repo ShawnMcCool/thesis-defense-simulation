@@ -142,10 +142,10 @@ public class IndividualHistoryWorld extends World
 
     private function updateInput():void
     {
-        if (Input.pressed(Key.LEFT)) {
+        if (Input.pressed(Key.PAGE_UP)) {
             WorldManager.switchTo("simulation");
         }
-        if (Input.pressed(Key.RIGHT)) {
+        if (Input.pressed(Key.PAGE_DOWN)) {
             WorldManager.switchTo("summary");
         }
         if (Input.pressed(Key.DOWN)) {
