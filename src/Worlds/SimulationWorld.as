@@ -19,6 +19,7 @@ import Entities.SimulationMeeple;
 public class SimulationWorld extends World
 {
     private const STATE_INITIAL:int = 0;
+    private const STATE_PAUSED:int = 3;
     private const STATE_RUNNING:int = 1;
     private const STATE_JAIL_ANALYSIS:int = 2;
 
@@ -146,8 +147,12 @@ public class SimulationWorld extends World
                 WorldManager.switchTo("title");
             }
             if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_RUNNING);
+                changeState(STATE_PAUSED);
                 colorMeeples();
+            }
+        } else if (state == STATE_PAUSED) {
+            if (Input.pressed(Key.RIGHT)) {
+                changeState(STATE_RUNNING);
             }
         } else if (state == STATE_RUNNING) {
             if (Input.pressed(Key.LEFT)) {
