@@ -21,7 +21,7 @@ public class SummaryWorld extends World
     public function SummaryWorld(simulation:Simulation)
     {
         this.simulation = simulation;
-        this.pyramid = new MeeplePyramid(simulation.GetIndividuals());
+        this.pyramid = new MeeplePyramid(simulation.getIndividuals());
         add(this.pyramid);
         changeState(STATE_ALL_UNKNOWN);
     }

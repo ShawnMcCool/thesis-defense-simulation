@@ -102,7 +102,7 @@ public class IndividualHistoryWorld extends World
 
     public function selectIndividual():Individual
     {
-        var individuals:Vector.<Individual> = simulation.GetIndividuals();
+        var individuals:Vector.<Individual> = simulation.getIndividuals();
 
         var counter:int = 0;
         for each (var individual:Individual in individuals) {

@@ -9,7 +9,7 @@ public class MeepleArray extends Entity
 {
     protected var horizontalMargin:int = 40;
     protected var verticalMargin:int = 40;
-    private var leftOffset:int = 100;
+    protected var leftOffset:int = 100;
 
     protected var meeples:Vector.<Meeple> = new Vector.<Meeple>();
 
@@ -57,7 +57,7 @@ public class MeepleArray extends Entity
         }
     }
 
-    private function getWidthPer():int
+    protected function getWidthPer():int
     {
         var usableSpace:int = FP.width - (horizontalMargin*2);
         return usableSpace / meeples.length;

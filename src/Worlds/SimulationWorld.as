@@ -12,6 +12,7 @@ import net.flashpunk.utils.Input;
 
 import Simulation.Simulation;
 import Simulation.Individual;
+
 import Entities.SimulationMeeple;
 
 public class SimulationWorld extends World
@@ -48,7 +49,7 @@ public class SimulationWorld extends World
 
     private function initializeMeeples():void
     {
-        for each (var individual:Individual in simulation.GetIndividuals()) {
+        for each (var individual:Individual in simulation.getIndividuals()) {
             var meeple:SimulationMeeple = new SimulationMeeple(individual, FP.rand(FP.width), FP.rand(FP.height));
             meeples.push(meeple);
             add(meeple);
@@ -57,9 +58,9 @@ public class SimulationWorld extends World
         meeples.sort(shuffleVector);
     }
 
-    private function shuffleVector( a:Object, b:Object ):int
+    private function shuffleVector(a:Object, b:Object):int
     {
-        return Math.floor( Math.random() * 3 - 1 );
+        return Math.floor(Math.random() * 3 - 1);
     }
 
     private function initializeHud():void
@@ -122,8 +123,8 @@ public class SimulationWorld extends World
     {
         super.update();
 
-        if ( ! paused) {
-            simulation.Update();
+        if (!paused) {
+            simulation.update();
         }
 
         if (state == STATE_RUNNING_COVARIATES) {
@@ -141,72 +142,90 @@ public class SimulationWorld extends World
 
     private function updateInput():void
     {
-        if (state == STATE_PAUSED_UNKNOWN) {
-            if (Input.pressed(Key.LEFT)) {
-                WorldManager.switchTo("title");
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                if (simulationDone()) {
-                    changeState(STATE_ANALYSIS_UNKNOWN);
-                    return;
+        switch (state) {
+            case STATE_PAUSED_UNKNOWN:
+                if (Input.pressed(Key.LEFT)) {
+                    WorldManager.switchTo("title");
                 }
-                changeState(STATE_RUNNING_UNKNOWN);
-            }
-        } else if (state == STATE_RUNNING_UNKNOWN) {
-            if (Input.pressed(Key.LEFT)) {
-                changeState(STATE_PAUSED_UNKNOWN);
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_ANALYSIS_UNKNOWN);
-            }
-        } else if (state == STATE_ANALYSIS_UNKNOWN) {
-            if (Input.pressed(Key.LEFT)) {
-                if (simulationDone()) {
+                if (Input.pressed(Key.RIGHT)) {
+                    if (simulationDone()) {
+                        changeState(STATE_ANALYSIS_UNKNOWN);
+                        return;
+                    }
+                    changeState(STATE_RUNNING_UNKNOWN);
+                }
+                break;
+            case STATE_RUNNING_UNKNOWN:
+                if (Input.pressed(Key.LEFT)) {
                     changeState(STATE_PAUSED_UNKNOWN);
-                    return;
                 }
-                changeState(STATE_RUNNING_UNKNOWN);
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_PAUSED_COVARIATES);
-            }
-        } else if (state == STATE_PAUSED_COVARIATES) {
-            if (Input.pressed(Key.LEFT)) {
-                changeState(STATE_ANALYSIS_UNKNOWN);
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                if (simulationDone()) {
-                    changeState(STATE_ANALYSIS_COVARIATES);
-                    return;
+                if (Input.pressed(Key.RIGHT)) {
+                    changeState(STATE_ANALYSIS_UNKNOWN);
                 }
-                changeState(STATE_RUNNING_COVARIATES);
-            }
-        } else if (state == STATE_RUNNING_COVARIATES) {
-            if (Input.pressed(Key.LEFT)) {
-                changeState(STATE_PAUSED_COVARIATES);
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                changeState(STATE_ANALYSIS_COVARIATES);
-            }
-        } else if (state == STATE_ANALYSIS_COVARIATES) {
-            if (Input.pressed(Key.LEFT)) {
-                if (simulationDone()) {
+                if (Input.pressed(Key.DOWN)) {
+                    finishSimulation();
+                }
+                break;
+            case STATE_ANALYSIS_UNKNOWN:
+                if (Input.pressed(Key.LEFT)) {
+                    if (simulationDone()) {
+                        changeState(STATE_PAUSED_UNKNOWN);
+                        return;
+                    }
+                    changeState(STATE_RUNNING_UNKNOWN);
+                }
+                if (Input.pressed(Key.RIGHT)) {
                     changeState(STATE_PAUSED_COVARIATES);
-                    return;
                 }
-                changeState(STATE_RUNNING_COVARIATES);
-            }
-            if (Input.pressed(Key.RIGHT)) {
-                if (simulationDone()) {
-                    WorldManager.switchTo("history");
+                break;
+            case STATE_PAUSED_COVARIATES:
+                if (Input.pressed(Key.LEFT)) {
+                    changeState(STATE_ANALYSIS_UNKNOWN);
                 }
-            }
+                if (Input.pressed(Key.RIGHT)) {
+                    if (simulationDone()) {
+                        changeState(STATE_ANALYSIS_COVARIATES);
+                        return;
+                    }
+                    changeState(STATE_RUNNING_COVARIATES);
+                }
+                break;
+            case STATE_RUNNING_COVARIATES:
+                if (Input.pressed(Key.LEFT)) {
+                    changeState(STATE_PAUSED_COVARIATES);
+                }
+                if (Input.pressed(Key.RIGHT)) {
+                    changeState(STATE_ANALYSIS_COVARIATES);
+                }
+                break;
+            case STATE_ANALYSIS_COVARIATES:
+                if (Input.pressed(Key.LEFT)) {
+                    if (simulationDone()) {
+                        changeState(STATE_PAUSED_COVARIATES);
+                        return;
+                    }
+                    changeState(STATE_RUNNING_COVARIATES);
+                }
+                if (Input.pressed(Key.RIGHT)) {
+                    if (simulationDone()) {
+                        WorldManager.switchTo("history");
+                    }
+                }
+                break;
+        }
+    }
+
+    private function finishSimulation():void
+    {
+        var count:int = simulation.getDayCount();
+        for (var i:int = 0; i < (30 - count); i++) {
+            simulation.nextDay();
         }
     }
 
     private function simulationDone():Boolean
     {
-        return simulation.GetDayCount() == 30;
+        return simulation.getDayCount() == 30;
     }
 
     private function colorMeeples():void
@@ -221,28 +240,34 @@ public class SimulationWorld extends World
         headingLabels[this.state].visible = false;
         headingLabels[state].visible = true;
 
-        if (state == STATE_PAUSED_UNKNOWN) {
-            sendMeeplesHome();
-            colorAllMeeplesUnknown();
-            paused = true;
-        } else if (state == STATE_RUNNING_UNKNOWN) {
-            sendMeeplesHome();
-            colorAllMeeplesUnknown();
-            paused = false;
-        } else if (state == STATE_ANALYSIS_UNKNOWN) {
-            sendMeeplesToJail();
-            colorAllMeeplesUnknown();
-            paused = true;
-        } else if (state == STATE_PAUSED_COVARIATES) {
-            sendMeeplesHome();
-            colorMeeples();
-            paused = true;
-        } else if (state == STATE_RUNNING_COVARIATES) {
-            sendMeeplesHome();
-            paused = false;
-        } else if (state == STATE_ANALYSIS_COVARIATES) {
-            sendMeeplesToJail();
-            paused = true;
+        switch (state) {
+            case STATE_PAUSED_UNKNOWN:
+                sendMeeplesHome();
+                colorAllMeeplesUnknown();
+                paused = true;
+                break;
+            case STATE_RUNNING_UNKNOWN:
+                sendMeeplesHome();
+                colorAllMeeplesUnknown();
+                paused = false;
+                break;
+            case STATE_ANALYSIS_UNKNOWN:
+                sendMeeplesToJail();
+                colorAllMeeplesUnknown();
+                paused = true;
+                break;
+            case STATE_PAUSED_COVARIATES:
+                sendMeeplesHome();
+                colorMeeples();
+                paused = true;
+                break;
+            case STATE_RUNNING_COVARIATES:
+                sendMeeplesHome();
+                paused = false;
+                break;
+            case STATE_ANALYSIS_COVARIATES:
+                sendMeeplesToJail();
+                paused = true;
         }
 
         this.state = state;
@@ -278,7 +303,7 @@ public class SimulationWorld extends World
 
     private function updateLabels():void
     {
-        dayCountLabel.SetText(simulation.GetDayCount().toString());
+        dayCountLabel.SetText(simulation.getDayCount().toString());
     }
 }
 }

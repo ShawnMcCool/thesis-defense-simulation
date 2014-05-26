@@ -23,14 +23,14 @@ public class Simulation
         }
     }
 
-    public function GetIndividuals():Vector.<Individual>
+    public function getIndividuals():Vector.<Individual>
     {
         return individuals;
     }
 
-    public function Update():void
+    public function update():void
     {
-        if (GetDayCount() >= maxNumberOfSimulatedDays) {
+        if (getDayCount() >= maxNumberOfSimulatedDays) {
             return;
         }
 
@@ -49,17 +49,12 @@ public class Simulation
         }
     }
 
-    public function GetDayCount():Number
+    public function getDayCount():Number
     {
         return dayCount;
     }
 
-    public function CountIndividualsWithEvents():Number
-    {
-        return CountIndividualsWithMinimumEvents(1);
-    }
-
-    public function CountIndividualsWithMinimumEvents(number:Number):Number
+    public function countIndividualsWithMinimumEvents(number:Number):Number
     {
         var counter:int = 0;
         for each (var individual:Individual in individuals) {
