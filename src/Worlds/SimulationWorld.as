@@ -67,14 +67,13 @@ public class SimulationWorld extends World
     {
         dayCountLabel = new TextEntity(
             "0",
-            0x000000,
+            0xFFFFFF,
             48,
             20, 40
         );
         dayCountLabel.SetPrefix("Day ");
         add(dayCountLabel);
-		dayCountLabel.SetColor(0xFF0000);
-
+		
         var headings:Array = [
             "A hidden population",
             "Events in a hidden population",
